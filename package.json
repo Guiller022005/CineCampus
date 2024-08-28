@@ -1,0 +1,15 @@
+{
+  "name": "cinecampus",
+  "version": "1.0.0",
+  "description": "## Descripción",
+  "main": "app.js",
+  "scripts": {
+    "dev": "node --env-file .env --watch app.js"
+  },
+  "keywords": [],
+  "author": "Jose Guillermo Paul Diaz",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^6.8.0"
+  }
+}
