@@ -1,35 +1,36 @@
-require('dotenv').config(); // carga las variables de entorno desde un archivo .env.
+// app.js
+require('dotenv').config(); // Carga las variables de entorno desde un archivo .env
 const express = require('express'); // Framework para manejar el servidor
 const connectDB = require('./server/config/db'); // Importa la función de conexión a la base de datos MongoDB
-const app = express(); // Instancia
-const movies = require('./server/routes/movies'); // Importa rutas de peliculas
+const movies = require('./server/routes/movies'); // Importa rutas de películas
 
+const app = express(); // Instancia
 
 /**
  * @function connectDB
  * @description Establece la conexión con la base de datos MongoDB utilizando la configuración en la variable de entorno.
  * Se llama al inicio de la aplicación para asegurar que la base de datos esté disponible antes de recibir solicitudes.
  */
-connectDB();
 
-// Middlewares
-app.use(express.json());
+connectDB(); // Conecta a la base de datos
 
+app.use(express.json()); // Middleware para manejar JSON
+
+
+
+app.get('/', (req, res) => res.send('API funcionando')); // Ruta raíz para verificar la API
 
 /**
- * @function app.get
- * @description Ruta raíz para verificar que la API esté funcionando.
- * 
- * @param {string} '/' - La ruta raíz de la API.
- * @param {Function} req - Objeto de solicitud (request) Express.
- * @param {Function} res - Objeto de respuesta (response) Express.
- * 
- * @returns {void}
+ * @function
+ * @name app.use('/api/movies', movies)
+ * @description Configura las rutas de películas para el prefijo '/api/movies'.
+ * @param {string} '/api/movies' - Prefijo de la ruta.
+ * @param {Router} movies - Router de rutas de películas.
  */
-app.get('/', (req, res) => res.send('API funcionando'));
 
-// Configuracion del puerto y listen
-const PORT = process.env.PORT || 3000;
+app.use('/api/movies', movies); // Configuración de las rutas de películas
+
+const PORT = process.env.PORT || 3000; // Configuración del puerto
 
 /**
  * @function app.listen
@@ -40,13 +41,5 @@ const PORT = process.env.PORT || 3000;
  * 
  * @returns {void}
  */
-app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
 
-/**
- * @function app.use
- * @description Configuracion de las rutas de la aplicación.
- * 
- * @param {string} '/api/movies' - Ruta base para las operaciones relacionadas con películas.
- * @param {Object} movies - Router Express que maneja las rutas relacionadas con las películas.
- */
-app.use('/api/movies', movies);
+app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
