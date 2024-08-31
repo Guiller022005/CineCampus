@@ -40,13 +40,5 @@ const PORT = process.env.PORT || 3000;
  * 
  * @returns {void}
  */
-app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
 
-/**
- * @function app.use
- * @description Configuracion de las rutas de la aplicación.
- * 
- * @param {string} '/api/movies' - Ruta base para las operaciones relacionadas con películas.
- * @param {Object} movies - Router Express que maneja las rutas relacionadas con las películas.
- */
-app.use('/api/movies', movies);
+app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));

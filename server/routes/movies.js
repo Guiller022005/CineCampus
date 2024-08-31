@@ -1,28 +1,32 @@
-/**
- * @file movies.js
- * @description Archivo que define las rutas para las operaciones relacionadas con las películas en la API.
- * Utiliza el enrutador de Express para manejar las solicitudes y delega la lógica a un controlador.
- */
-
-const express = require('express'); // Importacion del framework Express
-const router = express.Router(); // Crea una instancia del enrutador
-const moviesController = require('../controllers/moviesController'); // Importa el controlador de películas
+// server/routes/movies.js
+const express = require('express');
+const router = express.Router();
+const moviesController = require('../controllers/moviesController');
 
 /**
- * @function router.get
- * @description Define una ruta para manejar las solicitudes GET a la ruta raíz de '/api/movies'.
- * Esta ruta invoca el método `getMovies` del controlador `moviesController`.
+ * Rutas para gestionar las películas.
  * 
- * @param {string} '/' - La ruta relativa para la solicitud GET.
- * @param {Function} moviesController.getMovies - Método del controlador que maneja la lógica para obtener las películas.
- * 
- * @returns {void}
+ * @module routes/movies
+ * @description
+ * *Define las rutas para obtener películas. Las rutas disponibles son:
+ * *- `GET /cartelera`: Obtiene las películas en cartelera.
+ * *- `GET /:id`: Obtiene una película por ID.
+ * *- `GET /`: Obtiene todas las películas.
+ * * @param {Request} req - La solicitud HTTP.
+ * *@param {Response} res - La respuesta HTTP.
+ * *@param {Function} next - El siguiente middleware.
  */
-router.get('/', moviesController.getMovies);// Obtener todas las películas
 
-/**
- * @module router
- * @description Exporta el enrutador de Express configurado para manejar las solicitudes relacionadas con las películas.
- */
+// // Ruta para obtener todas las películas
+// router.get('/', moviesController.getMovies);
+
+// Ruta para obtener todas las peliculas en cartelera
+router.get('/cartelera', moviesController.obtenerPeliculasEnCartelera);
+
+// Ruta para obtener una película por ID
+router.get('/:id', moviesController.obtenerPeliculaPorId);
+
+// Ruta para obtener todas las películas
+router.get('/', moviesController.listarPeliculas);
 
 module.exports = router;

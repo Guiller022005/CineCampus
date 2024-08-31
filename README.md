@@ -8,13 +8,14 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 
 - Node.js con Express
 - MongoDB
-- EJS para la renderización del lado del servidor
+- EJS para la renderización del lado del servidor 'proximamente'.
 
 ## Instalación
 
 1. Clona este repositorio.
 2. Instala las dependencias con `npm install`.
-3. Inicia el servidor con `npm start`.
+3. Instala las dependencias adicionales con `npm install express mongoose dotenv passport socket.io`.
+4. Inicia el servidor con `npm start`.
 
 ## Estructura del Proyecto
 
