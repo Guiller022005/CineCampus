@@ -3,6 +3,7 @@ require('dotenv').config(); // Carga las variables de entorno desde un archivo .
 const express = require('express'); // Framework para manejar el servidor
 const connectDB = require('./server/config/db'); // Importa la función de conexión a la base de datos MongoDB
 const movies = require('./server/routes/movies'); // Importa rutas de películas
+const asientos = require('./server/routes/asientos'); // Importa rutas de asientos
 
 const app = express(); // Instancia
 
@@ -29,6 +30,8 @@ app.get('/', (req, res) => res.send('API funcionando')); // Ruta raíz para veri
  */
 
 app.use('/api/movies', movies); // Configuración de las rutas de películas
+
+app.use('/api/asientos', asientos); // Configuración de las rutas de asientos
 
 const PORT = process.env.PORT || 3000; // Configuración del puerto
 

@@ -194,3 +194,63 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
   - **Código 404:** Retorna un mensaje de error si la película no es encontrada.
   - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
 
+# Caso 2 Compra de Boletos
+
+## API para Verificar Disponibilidad de Asientos:
+
+### 1. Obtener todos los asientos
+
+- **Endpoint:** `GET /api/asientos/asiento`
+- **URL:** `http://localhost:3000/api/asientos/asiento`.
+- **Descripción:** Devuelve una lista de todos los asientos disponibles en la base de datos.
+- **Parámetros:** Ninguno
+- **Respuesta:**
+  - **Código 200:** Retorna un array de objetos que representan los asientos.
+  - **Ejemplo de respuesta:**
+    ```json
+    [
+      {
+        "_id": "66d0c660d6820d3b3181a87b",
+        "id_sala": "66d06ed8a20753a6ddd1559f",
+        "tipo": "estandar",
+        "fila": "A",
+        "codigo": "A1"
+      },
+      {
+        "_id": "66d0c660d6820d3b3181a87c",
+        "id_sala": "66d06ed8a20753a6ddd1559f",
+        "tipo": "preferencial",
+        "fila": "A",
+        "codigo": "A2"
+      }
+    ]
+    ```
+  - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+
+### 2. Obtener asientos disponibles por función
+
+- **Endpoint:** `GET /api/asientos/asientos-disponibles-por-funcion/:id_funcion`
+- **URL:** `http://localhost:3000/api/asientos/asientos-disponibles-por-funcion/66d0e536d6820d3b3181a8cd`.
+- **Descripción:** Devuelve la lista de asientos disponibles para una función específica.
+- **Parámetros:**
+  - **id_funcion**: `string` - El ID de la función para la cual se desean consultar los asientos disponibles.
+- **Respuesta:**
+  - **Código 200:** Retorna un array de objetos que representan los asientos disponibles para la función.
+  - **Ejemplo de respuesta:**
+    ```json
+    {
+    "message": "Asientos disponibles obtenidos",
+    "asientos": [
+      {
+        "_id": "66d0c660d6820d3b3181a87c",
+        "codigo": "A2"
+      },
+      {
+        "_id": "66d0c660d6820d3b3181a87d",
+        "codigo": "A3"
+      }
+      ]
+    }
+    ```
+  - **Código 404:** Retorna un mensaje de error si la función no es encontrada.
+  - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
