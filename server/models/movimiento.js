@@ -1,23 +1,22 @@
+// models/movimiento.js
 const mongoose = require('mongoose');
 
 const movimientoSchema = new mongoose.Schema({
-  idCliente: {
-    type: mongoose.Schema.Types.ObjectId, // Referencia al cliente que hace la compra o reserva
-    required: true,
-    ref: 'Cliente' // Nombre del modelo al que hace referencia
-  },
   tipo: {
     type: String,
-    enum: ['compra', 'reserva'], // Tipos permitidos
+    enum: ['compra', 'reserva'],
     required: true
   },
   idFuncion: {
-    type: mongoose.Schema.Types.ObjectId, // Referencia a la función de la película
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'Funcion' // Nombre del modelo al que hace referencia
+    ref: 'Funcion' // Asegúrate de que el modelo Funcion esté definido
+  },
+  idUser: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User' // Asegúrate de que el modelo User esté definido
   }
-}, {
-  timestamps: true // Agrega campos createdAt y updatedAt automáticamente
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Movimiento', movimientoSchema, 'movimiento');

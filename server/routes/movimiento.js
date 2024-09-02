@@ -1,13 +1,12 @@
-// routes/movimiento.js
 const express = require('express');
 const router = express.Router();
 const { crearMovimiento, listarMovimientos } = require('../controllers/movimientosController');
+const { ensureAuthenticated } = require('../middlewares/auth');
 
-// Definir la ruta para crear un nuevo movimiento
-router.post('/crear', crearMovimiento);
+// Ruta para crear un nuevo movimiento (requiere autenticación)
+router.post('/crear', ensureAuthenticated, crearMovimiento);
 
-// Definir la ruta para listar todos los movimientos
-router.get('/', listarMovimientos);
+// Ruta para listar todos los movimientos (requiere autenticación)
+router.get('/', ensureAuthenticated, listarMovimientos);
 
 module.exports = router;
-
