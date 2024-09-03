@@ -59,6 +59,16 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
         MONGO_DB_NAME="cineCampus"
     ```
 
+    ```json
+        MONGO_PROTOCOLO="mongodb://"
+        MONGO_USER="tata"
+        MONGO_PWD="contraseñaSegura32"
+        MONGO_HOST="172.16.102.28"
+        MONGO_PORT=27017
+        MONGO_DB_NAME="cineCampus"
+
+    ```
+
 # Caso 1 Selección de Películas
 
 ## API para Listar Películas
@@ -543,6 +553,67 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
     ```
   - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
 
+# Caso de uso 5 Roles Definidos
+
+## API para Crear Usuarios
+
+### 1. Creacion del usuario y su rol 'VIP' o 'estandar'
+
+- **Endpoint:** `POST /api/users/`
+- **Descripción:** Este endpoint permite agregar un nuevo usuario al sistema.
+- **Requiere:** Extension 'PostMan'
+- **Método:** POST
+- **URL:** `http://localhost:3000/api/users/`
+- **Headers:** Content-Type: application/json
+- **Body (en formato JSON):**
+- **Parámetros:**
+  - **body:**
+    ```json
+    {
+      "user": "dine",
+      "pwd": "contraseñaSegura32",
+      "rol": "adminRole"
+    }
+    ```
+
+- **Respuesta:**
+- **Código 200:** Retorna un mensaje de confirmación con los detalles del movimiento.
+- **Ejemplo de respuesta:**
+  ```json
+  {
+    "message": "Usuario creado exitosamente"
+  }
+  ```
+- **Código 400:** Retorna un mensaje de error si el usuario ya esta en la base de datos no se puede crear o hay un problema con la solicitud.
+- **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+
+### 2. Listar todos los usuarios
+
+- **Endpoint:** `POST /api/users/`
+- **URL:** `http://localhost:3000/api/users/`
+- **Descripción:** Lista los usuarios q existen en la base de datos.
+- **Parámetros:** Ninguno
+- **Respuesta:**
+  - **Código 200:** Retorna un array de objetos que representan los usuarios.
+  - **Ejemplo de respuesta:**
+    ```json
+    [
+      {
+        "_id": "66d5a9312d4f9ce31912abc3",
+        "user": "VIP1",
+        "pwd": "passwordVIP1",
+        "rol": "VIP"
+      },
+      {
+        "_id": "66d5a9312d4f9ce31912abc4",
+        "user": "VIP2",
+        "pwd": "passwordVIP2",
+        "rol": "estandar"
+      }
+    ]
+    ```
+  - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+
 ### 2. Obtener usuarios por rol 'VIP' o 'estandar'
 
 - **Endpoint:** `GET /api/users/rol`
@@ -572,7 +643,7 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 
 ### 1. Actualizacion del usuario y su rol 'VIP' o 'estandar'
 
-- **Endpoint:** `PUT /api/users/`
+- **Endpoint:** `POST /api/users/`
 - **Descripción:** Este endpoint permite actualizar un nuevo usuario al sistema. Si lo q deseas actualizar es la password el usuario actualiza aumaticamente su rol y contraseña, si deseas actualizar el nombre del usuario, se eliminara el actual y se creara uno nuevo, debido a q mongo por seguridad lo maneja asi no se actualizan user, entonces se vuelve a crear con el cuerpo de la solicitud.
 - **Requiere:** Extension 'PostMan'
 - **Método:** PUT
@@ -593,7 +664,7 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 - **Ejemplo de respuesta:**
   ```json
   {
-    "message": "Usuario actualizado exitosamente"
+    "message": "Usuario creado exitosamente"
   }
   ```
 - **Código 400:** Retorna un mensaje de error si el usuario no esta en la base de datos no se puede actualizar o hay un problema con la solicitud.
