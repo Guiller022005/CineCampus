@@ -254,3 +254,72 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
     ```
   - **Código 404:** Retorna un mensaje de error si la función no es encontrada.
   - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+
+## API para Comprar Boletos
+
+### 1. Seleccion de la funcion y accion del usuario 'compra' o 'reserva'
+
+- **Endpoint:** `POST /api/movimientos/`
+- **URL:** `http://localhost:3000/api/movimientos`
+- **Descripción:** Reserva un asiento específico para una película y horario dados.
+- **Requiere:** Extension 'PostMan'
+- **Método:** POST
+- **URL:** `http://localhost:3000/api/movimientos`
+- **Headers:** Content-Type: application/json
+- **Body (en formato JSON):**
+- **Parámetros:**
+  - **body:**
+    ```json
+    {
+      "idUser": "66d64e15118f3e19a7eebaab",
+      "tipo": "reserva",
+      "idFuncion": "66d0e536d6820d3b3181a8cd"
+    }
+    ```
+
+- **Respuesta:**
+  - **Código 200:** Retorna un mensaje de confirmación con los detalles del movimiento.
+  - **Ejemplo de respuesta:**
+    ```json
+    {
+      "mensaje": "Movimiento creado con éxito",
+      "movimiento": {
+          "tipo": "reserva",
+          "idFuncion": "66d0e536d6820d3b3181a8cd",
+          "idUser": "66d64e15118f3e19a7eebaab",
+          "_id": "66d6724bb463264402a1b028",
+          "createdAt": "2024-09-03T02:19:55.311Z",
+          "updatedAt": "2024-09-03T02:19:55.311Z",
+          "__v": 0
+      }
+    }
+    ```
+  - **Código 400:** Retorna un mensaje de error si el usuario no esta en la base de datos movimiento no se puede crear o hay un problema con la solicitud.
+  - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+
+### 2. Listar todos los movimientos
+
+- **Endpoint:** `POST /api/movimientos/`
+- **URL:** `http://localhost:3000/api/movimientos`
+- **Descripción:** Lista los movimientos q han hecho los usuarios.
+- **Parámetros:** Ninguno
+- **Respuesta:**
+  - **Código 200:** Retorna un array de objetos que representan los movimientos de los usuarios.
+  - **Ejemplo de respuesta:**
+    ```json
+    [
+      {
+      "_id": "66d0ae57d6820d3b3181a85f",
+      "tipo": "compra",
+      "idFuncion": "66d0e536d6820d3b3181a8cd",
+      "idUser": "66d07916a20753a6ddd155d3"
+      },
+      {
+      "_id": "66d0ae57d6820d3b3181a860",
+      "tipo": "reserva",
+      "idFuncion": "66d0e536d6820d3b3181a8ce",
+      "iduser": "66d07916a20753a6ddd155d4"
+      }
+    ]
+    ```
+  - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
