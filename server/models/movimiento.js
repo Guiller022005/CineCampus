@@ -12,7 +12,7 @@ const movimientoSchema = new mongoose.Schema({
     required: true,
     ref: 'Funcion' // Asegúrate de que el modelo Funcion esté definido
   },
-  idUser: {
+  iduser: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'User' // Asegúrate de que el modelo User esté definido

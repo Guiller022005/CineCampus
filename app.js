@@ -4,6 +4,10 @@ const express = require('express'); // Framework para manejar el servidor
 const connectDB = require('./server/config/db'); // Importa la función de conexión a la base de datos MongoDB
 const movies = require('./server/routes/movies'); // Importa rutas de películas
 const asientos = require('./server/routes/asientos'); // Importa rutas de asientos
+const movimientos = require('./server/routes/movimiento'); // Importa rutas de movimientos
+
+const boletas = require('./server/routes/tickets'); // Importa rutas de boletas
+require('./server/middlewares/auth');
 
 const app = express(); // Instancia
 
@@ -32,6 +36,11 @@ app.get('/', (req, res) => res.send('API funcionando')); // Ruta raíz para veri
 app.use('/api/movies', movies); // Configuración de las rutas de películas
 
 app.use('/api/asientos', asientos); // Configuración de las rutas de asientos
+
+app.use('/api/movimientos', movimientos); // Configuración de las rutas de los movimientos
+
+
+app.use('/api/boletas', boletas); // Configuracion de rutas de boletas
 
 const PORT = process.env.PORT || 3000; // Configuración del puerto
 

@@ -308,7 +308,7 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 
 ### 2. Listar todos los movimientos
 
-- **Endpoint:** `POST /api/movimientos/`
+- **Endpoint:** `GET /api/movimientos/`
 - **URL:** `http://localhost:3000/api/movimientos`
 - **Descripción:** Lista los movimientos q han hecho los usuarios.
 - **Parámetros:** Ninguno
@@ -332,132 +332,269 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
     ]
     ```
   - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
-# Caso 2 Compra de Boletos
 
-## API para Verificar Disponibilidad de Asientos:
+# Caso de uso 3
 
-### 1. Obtener todos los asientos
+## API para crear una boleta
 
-- **Endpoint:** `GET /api/asientos/asiento`
-- **URL:** `http://localhost:3000/api/asientos/asiento`.
-- **Descripción:** Devuelve una lista de todos los asientos disponibles en la base de datos.
-- **Parámetros:** Ninguno
-- **Respuesta:**
-  - **Código 200:** Retorna un array de objetos que representan los asientos.
-  - **Ejemplo de respuesta:**
-    ```json
-    [
-      {
-        "_id": "66d0c660d6820d3b3181a87b",
-        "id_sala": "66d06ed8a20753a6ddd1559f",
-        "tipo": "estandar",
-        "fila": "A",
-        "codigo": "A1"
-      },
-      {
-        "_id": "66d0c660d6820d3b3181a87c",
-        "id_sala": "66d06ed8a20753a6ddd1559f",
-        "tipo": "preferencial",
-        "fila": "A",
-        "codigo": "A2"
-      }
-    ]
-    ```
-  - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+### 1. Creacion de la boleta y su descuento para 'VIP' o sino continua al 'estandar'
 
-### 2. Obtener asientos disponibles por función
-
-- **Endpoint:** `GET /api/asientos/asientos-disponibles-por-funcion/:id_funcion`
-- **URL:** `http://localhost:3000/api/asientos/asientos-disponibles-por-funcion/66d0e536d6820d3b3181a8cd`.
-- **Descripción:** Devuelve la lista de asientos disponibles para una función específica.
-- **Parámetros:**
-  - **id_funcion**: `string` - El ID de la función para la cual se desean consultar los asientos disponibles.
-- **Respuesta:**
-  - **Código 200:** Retorna un array de objetos que representan los asientos disponibles para la función.
-  - **Ejemplo de respuesta:**
-    ```json
-    {
-    "message": "Asientos disponibles obtenidos",
-    "asientos": [
-      {
-        "_id": "66d0c660d6820d3b3181a87c",
-        "codigo": "A2"
-      },
-      {
-        "_id": "66d0c660d6820d3b3181a87d",
-        "codigo": "A3"
-      }
-      ]
-    }
-    ```
-  - **Código 404:** Retorna un mensaje de error si la función no es encontrada.
-  - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
-
-## API para Comprar Boletos
-
-### 1. Seleccion de la funcion y accion del usuario 'compra' o 'reserva'
-
-- **Endpoint:** `POST /api/movimientos/`
-- **URL:** `http://localhost:3000/api/movimientos`
-- **Descripción:** Reserva un asiento específico para una película y horario dados.
+- **Endpoint:** `POST /api/boletas/`
+- **Descripción:** Este endpoint permite agregar una nueva boleta al sistema. Actualiza automaticamente al array de asientos de una funcion de estado 'disponible' a 'ocupado'.
 - **Requiere:** Extension 'PostMan'
 - **Método:** POST
-- **URL:** `http://localhost:3000/api/movimientos`
+- **URL:** `http://localhost:3000/api/boletas/`
 - **Headers:** Content-Type: application/json
 - **Body (en formato JSON):**
 - **Parámetros:**
   - **body:**
     ```json
     {
-      "idUser": "66d64e15118f3e19a7eebaab",
-      "tipo": "reserva",
-      "idFuncion": "66d0e536d6820d3b3181a8cd"
+      "idMovimiento": "66d0ae57d6820d3b3181a85f",
+      "idUsuario": "66d5a9312d4f9ce31912abc3",
+      "asientos":["66d0c660d6820d3b3181a87d", "66d0c660d6820d3b3181a882"],
+      "fecha": "01/07/2024"
     }
     ```
 
 - **Respuesta:**
-  - **Código 200:** Retorna un mensaje de confirmación con los detalles del movimiento.
-  - **Ejemplo de respuesta:**
-    ```json
+- **Código 200:** Retorna un mensaje de confirmación con los detalles de la boleta.
+- **Ejemplo de respuesta:**
+  ```json
+  {
+    "message": "Boleta creado exitosamente"
     {
-      "mensaje": "Movimiento creado con éxito",
-      "movimiento": {
-          "tipo": "reserva",
-          "idFuncion": "66d0e536d6820d3b3181a8cd",
-          "idUser": "66d64e15118f3e19a7eebaab",
-          "_id": "66d6724bb463264402a1b028",
-          "createdAt": "2024-09-03T02:19:55.311Z",
-          "updatedAt": "2024-09-03T02:19:55.311Z",
-          "__v": 0
-      }
+      "idMovimiento": "66d0ae57d6820d3b3181a861",
+      "asientos": [
+          "66d0c660d6820d3b3181a87d",
+          "66d0c660d6820d3b3181a882"
+      ],
+      "fecha": "01/07/2024",
+      "totalAPagar": 800,
+      "estadoCompra": "Completado",
+      "_id": "66d7e67120a3d3780e1f8a63",
+      "__v": 0
     }
-    ```
-  - **Código 400:** Retorna un mensaje de error si el usuario no esta en la base de datos movimiento no se puede crear o hay un problema con la solicitud.
-  - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+  }
+  ```
+- **Código 400:** Retorna un mensaje de error si el asiento ya esta ocupado en la funcion, no se puede crear o hay un problema con la solicitud.
+- **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
 
-### 2. Listar todos los movimientos
+### 2. Listar todos las boletas
 
-- **Endpoint:** `POST /api/movimientos/`
-- **URL:** `http://localhost:3000/api/movimientos`
-- **Descripción:** Lista los movimientos q han hecho los usuarios.
+- **Endpoint:** `GET /api/boletas/`
+- **URL:** ` http://localhost:3000/api/boletas/`
+- **Descripción:** Lista lAS boletas con estado 'Completado' o 'Cancelado'.
 - **Parámetros:** Ninguno
 - **Respuesta:**
-  - **Código 200:** Retorna un array de objetos que representan los movimientos de los usuarios.
+  - **Código 200:** Retorna un array de objetos que representan las boletas de los usuarios.
   - **Ejemplo de respuesta:**
     ```json
     [
       {
-      "_id": "66d0ae57d6820d3b3181a85f",
-      "tipo": "compra",
-      "idFuncion": "66d0e536d6820d3b3181a8cd",
-      "idUser": "66d07916a20753a6ddd155d3"
-      },
-      {
-      "_id": "66d0ae57d6820d3b3181a860",
-      "tipo": "reserva",
-      "idFuncion": "66d0e536d6820d3b3181a8ce",
-      "iduser": "66d07916a20753a6ddd155d4"
+        "asientos": [],
+        "_id": "66d0b0f1d6820d3b3181a86d",
+        "idMovimiento": "66d0ae57d6820d3b3181a85f",
+        "idAsiento": "66d07688a20753a6ddd155a2",
+        "fecha": "01/07/2024",
+        "totalAPagar": 200,
+        "estadoCompra": "Completado"
+        },
+        {
+        "asientos": [],
+        "_id": "66d0b0f1d6820d3b3181a86e",
+        "idMovimiento": "66d0ae57d6820d3b3181a860",
+        "idAsiento": "66d07688a20753a6ddd155a3",
+        "fecha": "01/07/2024",
+        "totalAPagar": 200,
+        "estadoCompra": "Cancelado"
       }
     ]
     ```
   - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+
+
+### 1. Obtener Boleta por ID
+
+- **Endpoint:** `GET /api/boletas/:id`
+- **URL:** `http://localhost:3000/api/boletas/66d0b0f1d6820d3b3181a86f`.
+- **Descripción:** Obtiene los detalles de una boleta específica según su ID.
+- **Parámetros:**
+  - **id:** `string` - El ID de la boleta que se desea obtener.
+- **Respuesta:**
+  - **Código 200:** Retorna un objeto que representa la película.
+  - **Ejemplo de respuesta:**
+    ```json
+    [{
+      "asientos": [],
+      "estadoCompra": "Completado",
+      "_id": "66d0b0f1d6820d3b3181a86f",
+      "idMovimiento": "66d0ae57d6820d3b3181a861",
+      "idAsiento": "66d07688a20753a6ddd155a4",
+      "fecha": "01/07/2024",
+      "totalAPagar": 200
+    }]
+    ```
+  - **Código 404:** Retorna un mensaje de error si la boleta no es encontrada.
+  - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+
+
+### 3. Actualizacion de la informacion de la Boleta 
+
+- **Endpoint:** `PUT /api/boletas/:id`
+- **Descripción:** Este endpoint permite actualizar una boleta al sistema. 
+- **Requiere:** Extension 'PostMan'
+- **Método:** PUT
+- **URL:** `http://localhost:3000/api/boletas/66d0b0f1d6820d3b3181a86f`
+- **Headers:** Content-Type: application/json
+- **Body (en formato JSON):**
+- **Parámetros:**
+  - **body:**
+    ```json
+    {
+      "idMovimiento": "66d0ae57d6820d3b3181a861",
+      "asientos":["66d0c660d6820d3b3181a87d", "66d0c660d6820d3b3181a882"],
+      "fecha": "01/07/2024"
+    }
+
+    ```
+
+- **Respuesta:**
+- **Código 200:** Retorna un mensaje de confirmación con la actulizacion de la boleta. 
+- **Ejemplo de respuesta:**
+  ```json
+  {
+    "message": "Boleta Actualizada exitosamente"
+    {
+      "estadoCompra": "Completado",
+      "_id": "66d0b0f1d6820d3b3181a86f",
+      "idMovimiento": "66d0ae57d6820d3b3181a861",
+      "idAsiento": "66d07688a20753a6ddd155a4",
+      "fecha": "01/07/2024",
+      "totalAPagar": 200,
+      "asientos": [
+          "66d0c660d6820d3b3181a87d",
+          "66d0c660d6820d3b3181a882"
+      ]
+    }
+  }
+  ```
+- **Código 400:** Retorna un mensaje de error si la boleta no esta en la base de datos no se puede actualizar o hay un problema con la solicitud.
+- **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+
+
+# Caso de uso 5 Roles Definidos
+
+## API para Crear Usuarios
+
+### 1. Creacion del usuario y su rol 'VIP' o 'estandar'
+
+- **Endpoint:** `POST /api/users/`
+- **Descripción:** Este endpoint permite agregar un nuevo usuario al sistema.
+- **Requiere:** Extension 'PostMan'
+- **Método:** POST
+- **URL:** `http://localhost:3000/api/users/`
+- **Headers:** Content-Type: application/json
+- **Body (en formato JSON):**
+- **Parámetros:**
+  - **body:**
+    ```json
+    {    "user": "nuevoUsuario42",   
+         "pwd": "contraseñaSegura32",   
+         "rol": "estandar"
+    }
+    ```
+
+- **Respuesta:**
+- **Código 200:** Retorna un mensaje de confirmación con los detalles del movimiento.
+- **Ejemplo de respuesta:**
+  ```json
+  {
+    "message": "Usuario creado exitosamente"
+  }
+  ```
+- **Código 400:** Retorna un mensaje de error si el usuario ya esta en la base de datos no se puede crear o hay un problema con la solicitud.
+- **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+
+### 2. Listar todos los usuarios
+
+- **Endpoint:** `GET /api/users/`
+- **URL:** `http://localhost:3000/api/users/`
+- **Descripción:** Lista los usuarios q existen en la base de datos.
+- **Parámetros:** Ninguno
+- **Respuesta:**
+  - **Código 200:** Retorna un array de objetos que representan los usuarios.
+  - **Ejemplo de respuesta:**
+    ```json
+    [
+      {
+        "_id": "66d5a9312d4f9ce31912abc3",
+        "user": "VIP1",
+        "pwd": "passwordVIP1",
+        "rol": "VIP"
+      },
+      {
+        "_id": "66d5a9312d4f9ce31912abc4",
+        "user": "VIP2",
+        "pwd": "passwordVIP2",
+        "rol": "estandar"
+      }
+    ]
+    ```
+  - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+
+### 2. Obtener usuarios por rol 'VIP' o 'estandar'
+
+- **Endpoint:** `GET /api/users/rol`
+- **URL:** `http://localhost:3000/api/users/rol`.
+- **Descripción:** Devuelve todas usuarios que tienen el rol definido por la variable value, actualemnte esta predefinida en 'estandar', para filtrar 'VIP' solo cambia el dato a 'VIP' o descomenta value = VIP y comenta value = estandar.
+- **Parámetros:** Ninguno
+- **Respuesta:**
+  - **Código 200:** Retorna un array de objetos con las películas que están en cartelera.
+  - **Ejemplo de respuesta:**
+    ```json
+    [{
+      "_id": "66d5a9622d4f9ce31912abcd",
+      "user": "estandar1",
+      "pwd": "passwordEstandar1",
+      "rol": "estandar"
+      },
+      {
+      "_id": "66d5a9622d4f9ce31912abce",
+      "user": "estandar2",
+      "pwd": "passwordEstandar2",
+      "rol": "estandar"
+    }]
+    ```
+- **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
+
+## API para Actualizar Usuarios
+
+### 1. Actualizacion del usuario y su rol 'VIP' o 'estandar'
+
+- **Endpoint:** `PUT /api/users/`
+- **Descripción:** Este endpoint permite actualizar un nuevo usuario al sistema. Si lo q deseas actualizar es la password el usuario actualiza aumaticamente su rol y contraseña, si deseas actualizar el nombre del usuario, se eliminara el actual y se creara uno nuevo, debido a q mongo por seguridad lo maneja asi no se actualizan user, entonces se vuelve a crear con el cuerpo de la solicitud.
+- **Requiere:** Extension 'PostMan'
+- **Método:** PUT
+- **URL:** `http://localhost:3000/api/users/66d64faabc9c716b2bc08cde`
+- **Headers:** Content-Type: application/json
+- **Body (en formato JSON):**
+- **Parámetros:**
+  - **body:**
+    ```json
+    {   "user": "tato",
+        "pwd": "newpasswore",
+        "rol": "estandar"
+    }
+    ```
+
+- **Respuesta:**
+- **Código 200:** Retorna un mensaje de confirmación con la actulizacion del usuario. 
+- **Ejemplo de respuesta:**
+  ```json
+  {
+    "message": "Usuario actualizado exitosamente"
+  }
+  ```
+- **Código 400:** Retorna un mensaje de error si el usuario no esta en la base de datos no se puede actualizar o hay un problema con la solicitud.
+- **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.
