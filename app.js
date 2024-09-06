@@ -7,7 +7,7 @@ const connectDB = require('./server/config/db'); // Importa la función de conex
 const movies = require('./server/routes/movies'); // Importa rutas de películas
 const asientos = require('./server/routes/asientos'); // Importa rutas de asientos
 const movimientos = require('./server/routes/movimiento'); // Importa rutas de movimientos
-
+const usuarios = require('./server/routes/users'); // Importa rutas de usuarios
 const boletas = require('./server/routes/tickets'); // Importa rutas de boletas
 require('./server/middlewares/auth');
 
@@ -48,6 +48,7 @@ app.use('/api/asientos', asientos); // Configuración de las rutas de asientos
 
 app.use('/api/movimientos', movimientos); // Configuración de las rutas de los movimientos
 
+app.use('/api/users/', usuarios); // Configuración de las rutas de los usuarios
 
 app.use('/api/boletas', boletas); // Configuracion de rutas de boletas
 
