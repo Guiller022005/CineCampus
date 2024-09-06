@@ -569,9 +569,9 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 - **Parámetros:**
   - **body:**
     ```json
-    {
-      "user": "dine",
-      "pwd": "contraseñaSegura32",
+    {    
+      "user": "karen",   
+      "pwd": "contraseñaSegura32",   
       "rol": "adminRole"
     }
     ```
