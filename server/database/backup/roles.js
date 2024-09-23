@@ -20,15 +20,39 @@ db.createRole(
         privileges: [
             {
                 resource: {
-                    db: "cineCampus", collection: "user"
+                    db: "cineCampus", collection: "asiento"
                 },
-                actions: ["find", "insert", "update"]
+                actions: ["find"]
             },
             {
                 resource: {
                     db: "cineCampus", collection:"funcion"
                 },
-                actions: ["find", "update", "insert", "remove"]
+                actions: ["find"]
+            },
+						{
+                resource: {
+                    db: "cineCampus", collection:"pelicula"
+                },
+                actions: ["find"]
+            },
+						{
+                resource: {
+                    db: "cineCampus", collection:"movimiento"
+                },
+                actions: ["find", "update", "insert"]
+            },
+						{
+                resource: {
+                    db: "cineCampus", collection:"boleta"
+                },
+                actions: ["find"]
+            },
+						{
+                resource: {
+                    db: "cineCampus", collection:"sala"
+                },
+                actions: ["find"]
             },
         ],
         roles: []
@@ -42,15 +66,39 @@ db.createRole(
         privileges: [
             {
                 resource: {
-                    db: "cineCampus", collection: "user"
+                    db: "cineCampus", collection: "asiento"
                 },
-                actions: ["find", "insert", "update"]
+                actions: ["find"]
             },
             {
                 resource: {
                     db: "cineCampus", collection:"funcion"
                 },
-                actions: ["find", "update", "insert", "remove"]
+                actions: ["find"]
+            },
+						{
+                resource: {
+                    db: "cineCampus", collection:"pelicula"
+                },
+                actions: ["find"]
+            },
+						{
+                resource: {
+                    db: "cineCampus", collection:"movimiento"
+                },
+                actions: ["find", "update", "insert"]
+            },
+						{
+                resource: {
+                    db: "cineCampus", collection:"boleta"
+                },
+                actions: ["find"]
+            },
+						{
+                resource: {
+                    db: "cineCampus", collection:"sala"
+                },
+                actions: ["find"]
             },
         ],
         roles: []

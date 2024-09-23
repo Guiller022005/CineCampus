@@ -9,9 +9,14 @@ const asientos = require('./server/routes/asientos'); // Importa rutas de asient
 const movimientos = require('./server/routes/movimiento'); // Importa rutas de movimientos
 const usuarios = require('./server/routes/users'); // Importa rutas de usuarios
 const boletas = require('./server/routes/tickets'); // Importa rutas de boletas
+const log_InRouter = require('./server/routers/log-InRouter');
 require('./server/middlewares/auth');
 
 const app = express(); // Instancia
+
+
+app.use("/login", log_InRouter);
+
 
 // Configuración de sesión
 app.use(session({

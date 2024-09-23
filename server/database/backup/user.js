@@ -13,3 +13,11 @@ db.createUser({
 //         { role: "estandar", db: "cineCampus" }
 //     ]
 // })
+
+// db.createUser({
+//     user: "Miguel",
+//     pwd: "123456789",
+//     roles: [
+//         { role: "VIP", db: "cineCampus" }
+//     ]
+// })
