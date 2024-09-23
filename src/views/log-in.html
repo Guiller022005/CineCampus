@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Log In</title>
+    <link rel="stylesheet" href="../css/log-in.css">
+    <script src="https://unpkg.com/vue@next"></script> <!-- Vue CDN -->
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="header__logo">
+                <img src="../storage/img/Star.svg" alt="Logo">
+            </div>
+        </header>
+        <main>
+            <section class="section__form">
+                <h1>Log in</h1>
+                <form @submit.prevent="submitLogin" class="login">
+                    <label for="email">Email address</label>
+                    <input type="email" v-model="email">
+                    <label for="password">Password</label>
+                    <input type="password" v-model="password">
+                    <span>Forgot password?</span>
+                    <input type="submit" value="Log in">
+                </form>
+            </section>
+            <section>
+                <div class="section__line">
+                    <span>Or Login with</span>
+                </div>
+                <div class="section__social">
+                    <button><img src="../storage/img/Facebook.svg" alt="Facebook"></button>
+                    <button><img src="../storage/img/Google.svg" alt="Google"></button>
+                    <button><img src="../storage/img/Apple.svg" alt="Apple"></button>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>Don’t have an account? <b>Sign up</b></p>
+        </footer>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    email: 'helloworld@gmail.com',
+                    password: '123456789'
+                };
+            },
+            methods: {
+                submitLogin() {
+                    // Aquí puedes manejar la lógica del login
+                    console.log('Email:', this.email);
+                    console.log('Password:', this.password);
+                    alert('Login successful!');
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>

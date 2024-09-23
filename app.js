@@ -11,6 +11,10 @@ require('./server/middlewares/auth');
 
 const app = express(); // Instancia
 
+
+app.use("/login", log_InRouter);
+
+
 // Configuración de sesión
 app.use(session({
     secret: 'yourSecret',
