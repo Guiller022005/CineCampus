@@ -3,7 +3,7 @@ require('dotenv').config(); // Carga las variables de entorno desde un archivo .
 const express = require('express'); // Framework para manejar el servidor
 const session = require('express-session'); // Middleware para manejar sesiones
 const passport = require('passport'); // Middleware para manejar autenticación
-const connectDB = require('./server/config/db'); // Importa la función de conexión a la base de datos MongoDB
+const connectDB = require('./server/database/databaseMongo'); // Importa la función de conexión a la base de datos MongoDB
 const movies = require('./server/routes/movies'); // Importa rutas de películas
 const asientos = require('./server/routes/asientos'); // Importa rutas de asientos
 const movimientos = require('./server/routes/movimiento'); // Importa rutas de movimientos
