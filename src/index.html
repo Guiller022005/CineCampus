@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema App</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app" class="app">
+        <header>
+            <div class="user-info">
+                <img src="storage/img/user-avatar.svg" alt="User Profile" class="user-avatar">
+                <div>
+                    <p>Hi, {{ username }}!</p>
+                    <p>Let's watch movie together!</p>
+                </div>
+            </div>
+            <div class="notification-container">
+                <img src="storage/img/bell-icon.svg" alt="Notifications" class="notification-icon">
+            </div>
+        </header>
+
+        <div class="search-bar">
+            <img src="storage/img/magnifying-glass.svg" alt="Search" class="search-icon">
+            <input type="text" v-model="searchQuery" placeholder="Search movie, cinema, genre...">
+        </div>
+
+        <main>
+            <section class="now-playing">
+                <div class="section-header">
+                    <h2>Now playing</h2>
+                    <a href="#">See all</a>
+                </div>
+                <div class="movie-carousel" @scroll="handleScroll">
+                    <div v-for="movie in nowPlaying" :key="movie.id" class="movie-poster">
+                        <img :src="movie.poster" :alt="movie.title">
+                        <h3>{{ movie.title }}</h3>
+                        <p>{{ movie.genre }}</p>
+                    </div>
+                </div>                
+                <div class="carousel-dots">
+                    <span 
+                        v-for="(dot, index) in nowPlaying" 
+                        :key="index" 
+                        class="dot" 
+                        :class="{ active: index === activeDotIndex }">
+                    </span>
+                </div>
+            </section>
+
+            <section class="coming-soon">
+                <div class="section-header">
+                    <h2>Coming soon</h2>
+                    <a href="#">See all</a>
+                </div>
+                <div class="movie-list">
+                    <div v-for="movie in comingSoon" :key="movie.id" class="coming-soon-item">
+                        <img :src="movie.poster" :alt="movie.title">
+                        <div>
+                            <h3>{{ movie.title }}</h3>
+                            <p>{{ movie.releaseDate }}</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <nav>
+                <button :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'">
+                    <img src="storage/img/home-icon.svg" alt="Home">
+                </button>
+                <button :class="{ active: activeTab === 'browse' }" @click="activeTab = 'browse'">
+                    <img src="storage/img/browse-icon.svg" alt="Browse">
+                </button>
+                <button :class="{ active: activeTab === 'tickets' }" @click="activeTab = 'tickets'">
+                    <img src="storage/img/tickets-icon.svg" alt="Tickets">
+                </button>
+                <button :class="{ active: activeTab === 'profile' }" @click="activeTab = 'profile'">
+                    <img src="storage/img/profile-icon.svg" alt="Profile">
+                </button>
+            </nav>
+        </footer>
+    </div>
+
+    <script>
+        const { createApp, ref, onMounted } = Vue
+
+createApp({
+    setup() {
+        const username = ref('Ferrucio Tuccine')
+        const searchQuery = ref('')
+        const activeTab = ref('home')
+        const nowPlaying = ref([
+            { id: 1, title: 'Avatar', genre: 'Adventure', poster: 'storage/img/avatar.svg' },
+            { id: 2, title: 'Puss In Boots The Last...', genre: 'Adventure', poster: 'storage/img/catBoots.svg' },
+            { id: 3, title: 'Fast and Furious', genre: 'Comedy', poster: 'storage/img/fastAndFurious.svg' },
+        ])
+        const comingSoon = ref([
+            { id: 4, title: 'Furious 10', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
+            { id: 5, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
+        ])
+        const activeDotIndex = ref(0); // Para el índice del punto activo
+
+        // Función para manejar el scroll del carrusel
+        const handleScroll = (event) => {
+            const scrollLeft = event.target.scrollLeft;
+            const carouselWidth = event.target.clientWidth;
+            const movieWidth = event.target.children[0].clientWidth;
+            const index = Math.round(scrollLeft / movieWidth);
+            activeDotIndex.value = Math.max(0, Math.min(index, nowPlaying.value.length - 1)); // Asegurarse de que el índice esté dentro del rango
+        };
+
+        return {
+            username,
+            searchQuery,
+            activeTab,
+            nowPlaying,
+            comingSoon,
+            activeDotIndex,
+            handleScroll,
+        }
+    }
+}).mount('#app')
+
+    </script>
+</body>
+</html>

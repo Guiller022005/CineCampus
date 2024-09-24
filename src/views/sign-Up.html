@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Cinecampus</title>
+    <link rel="stylesheet" href="../css/sign-Up.css">
+    <script src="https://unpkg.com/vue@3.2.47"></script> <!-- Vue 3 CDN -->
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="header__logo">
+                <img src="../storage/img/Star.svg" alt="Logo">
+            </div>
+        </header>
+        <main>
+            <section class="section__form">
+                <h1>Create account</h1>
+                <form @submit.prevent="submitForm" class="login">
+                    <label for="username">Username</label>
+                    <input type="text" placeholder="Your username" v-model="username">
+
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="Your email" v-model="email">
+
+                    <label for="password">Password</label>
+                    <input type="password" v-model="password">
+
+                    <span>I accept the terms and privacy policy</span>
+
+                    <input type="submit" value="Sign Up">
+                </form>
+            </section>
+        </main>
+        <footer>
+            <p>Already have an account? <b>Log in</b></p>
+        </footer>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    username: 'Marcos',
+                    email: 'ma@gmail.com',
+                    password: '123456789',
+                };
+            },
+            methods: {
+                submitForm() {
+                    // Aquí puedes manejar la lógica de envío
+                    console.log('Username:', this.username);
+                    console.log('Email:', this.email);
+                    console.log('Password:', this.password);
+                    alert('Sign Up successful!');
+                }
+            }
+        });
+
+        app.mount('#app');
+    </script>
+</body>
+</html>
