@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Selection</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: 'SF Pro Text', Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .cinema-selection {
+            max-width: 414px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .back-button, .more-options {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .movie-details {
+            margin-bottom: 24px;
+        }
+        .movie-poster {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        .movie-poster {
+            height: 40vh;
+        }
+        h2 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .movie-genres {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .movie-genres span {
+            font-size: 0.7rem;
+            color: #888888;
+        }
+        .movie-description {
+            font-size: 12px;
+            line-height: 1.4;
+            margin-bottom: 16px;
+        }
+        .watch-trailer {
+            background: #FE0000;
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .cast, .cinema {
+            margin-bottom: 24px;
+        }
+        h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .cast-list {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+        }
+        .cast-member {
+            text-align: center;
+        }
+        .cast-member img {
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            margin-bottom: 8px;
+        }
+        .actor-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .character-name {
+            font-size: 12px;
+            color: #888888;
+        }
+        .cinema-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1C1C1E;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: border 0.3s;
+        }
+
+        .selected {
+            border: 2px solid red; /* Borde rojo */
+        }
+        .cinema-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .cinema-info p {
+            font-size: 14px;
+            color: #888888;
+        }
+        .cinema-logo {
+            width: 40px;
+            height: 40px;
+        }
+        .book-now {
+            width: 100%;
+            background-color: #FF3B30;
+            color: #ffffff;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="cinema-selection">
+        <header>
+            <button class="back-button" @click="goBack">&lt;</button>
+            <h1>Cinema Selection</h1>
+            <div class="more-options"><img src="../storage/img/menu.png"></div>
+        </header>
+
+        <div class="movie-details">
+            <img :src="movie.poster" :alt="movie.title" class="movie-poster">
+            <h2>{{ movie.title }}</h2>
+            <div class="movie-genres">
+                <span v-for="genre in movie.genres" :key="genre">{{ genre }}</span>
+            </div>
+            <p class="movie-description">{{ movie.description }}</p>
+            <button class="watch-trailer" @click="watchTrailer">
+                ▶ Watch Trailer
+            </button>
+        </div>
+
+        <section class="cast">
+            <h3>Cast</h3>
+            <div class="cast-list">
+                <div v-for="actor in movie.cast" :key="actor.name" class="cast-member">
+                    <img :src="actor.photo" :alt="actor.name">
+                    <p class="actor-name">{{ actor.name }}</p>
+                    <p class="character-name">{{ actor.character }}</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cinema">
+            <h3>Cinema</h3>
+            <div class="cinema-list">
+                <div 
+                    v-for="cinema in cinemas" 
+                    :key="cinema.id" 
+                    class="cinema-item" 
+                    :class="{ selected: selectedCinema === cinema.id }"
+                    @click="selectCinema(cinema.id)"
+                >
+                    <div class="cinema-info">
+                        <h4>{{ cinema.name }}</h4>
+                        <p>{{ cinema.location }}</p>
+                    </div>
+                    <img :src="cinema.logo" :alt="cinema.name" class="cinema-logo">
+                </div>
+            </div>
+        </section>
+
+        <button class="book-now" @click="bookNow">Book Now</button>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+
+createApp({
+    setup() {
+        const movie = ref({
+            title: "Puss in boots the last wish",
+            genres: ["Action", "Adventure"],
+            description: "Jake Sully and Ney'tiri have formed a family and are doing everything to stay together. However, they must leave their home and explore the regions of Pandora. When an ancient threat resurfaces, Jake must fight a difficult war against the humans.",
+            poster: "https://m.media-amazon.com/images/M/MV5BNjMyMDBjMGUtNDUzZi00N2MwLTg1MjItZTk2MDE1OTZmNTYxXkEyXkFqcGdeQXVyMTQ5NjA0NDM0._V1_SX300.jpg",
+            cast: [
+                { name: "Antonio Banderas", character: "Puss in Boots", photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Antonio_Banderas-66031_%28cropped%29.jpg/800px-Antonio_Banderas-66031_%28cropped%29.jpg" },
+                { name: "Salma Hayek", character: "Kitty Softpaws", photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Salma_Hayek-9894.jpg/220px-Salma_Hayek-9894.jpg" },
+                { name: "Harvey Guillén", character: "Perro", photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Harvey_Guill%C3%A9n_Photo_Op_GalaxyCon_Richmond_2022.jpg/800px-Harvey_Guill%C3%A9n_Photo_Op_GalaxyCon_Richmond_2022.jpg" },
+            ]
+        })
+
+        const cinemas = ref([
+            { id: 1, name: "Atrium Cinemas", location: "Staff Lines, Saddar, Karachi", logo: "https://yt3.googleusercontent.com/eJG_qiZmgwaP8iEXJqiFZxVKGWJBAwPOpf3JiF2e2-ruu668j-RKXCXwSi7ZdRRhBrPyWW_E=s900-c-k-c0x00ffffff-no-rj" },
+            { id: 2, name: "Neuplex", location: "Khayaban - e Shaheen, DHA Phase 8", logo: "https://seeklogo.com/images/C/cine-colombia-logo-1C443A07F5-seeklogo.com.png" },
+        ])
+
+        const selectedCinema = ref(null); // Para almacenar el cine seleccionado
+
+        function selectCinema(id) {
+            selectedCinema.value = id; // Actualiza el cine seleccionado
+        }
+
+        function goBack() {
+            console.log("Going back")
+            // Implement actual navigation logic here
+        }
+
+        function watchTrailer() {
+            console.log("Watching trailer")
+            // Implement trailer viewing logic here
+        }
+
+        function bookNow() {
+            console.log("Booking now")
+            // Implement booking logic here
+        }
+
+        return {
+            movie,
+            cinemas,
+            selectedCinema,
+            selectCinema,
+            goBack,
+            watchTrailer,
+            bookNow
+        }
+    }
+}).mount('#app')
+
+    </script>
+</body>
+</html>
