@@ -66,7 +66,7 @@ header {
 
 .search-bar input {
     width: 100%;
-    padding: 20px 15px 20px 45px; /* Ajustar el padding para dar espacio a la lupa */
+    padding: 20px 15px 12px 45px; /* Ajustar el padding para dar espacio a la lupa */
     border-radius: 10px;
     border: 1px solid #333;
     background-color: #222;
@@ -91,7 +91,6 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
 }
 
 .section-header a {
@@ -107,6 +106,9 @@ main {
     overflow-x: auto;
     gap: 15px;
     margin-bottom: 10px;
+  }
+  .movie-info {
+    margin-top: -15px;
   }
   
   .movie-poster {
@@ -249,7 +251,7 @@ main {
                         <img :src="movie.poster" :alt="movie.title">
                     </div>
                 </div>
-                <div class="movie-info">
+                <div class="movie-info" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 5px;">
                     <h3>{{ nowPlaying[activeIndex].title }}</h3>
                     <small>{{ nowPlaying[activeIndex].genre }}</small>
                 </div>
@@ -310,11 +312,11 @@ main {
                 const movieCarousel = ref(null);
 
                 const nowPlaying = ref([
-                    { id: 1, title: 'Avatar', genre: 'Adventure', poster: 'storage/img/avatar.svg' },
+                    { id: 1, title: 'Avatar', genre: 'Adventure', poster: 'storage/img/avatar.png' },
                     { id: 2, title: 'Puss In Boots The Last...', genre: 'Adventure', poster: 'storage/img/Rectangle 4170.png' },
-                    { id: 3, title: 'Fast X', genre: 'Action', poster: 'storage/img/fastAndFurious.svg' },
-                    { id: 4, title: 'Fast and Furious 9', genre: 'Action', poster: 'storage/img/fastAndFurious.svg' },
-                    { id: 5, title: 'Fast and Furious 10', genre: 'Action', poster: 'storage/img/fastAndFurious.svg' },
+                    { id: 3, title: 'Fast X', genre: 'Action', poster: 'storage/img/fastAndFurious.png' },
+                    { id: 4, title: 'Fast and Furious 9', genre: 'Action', poster: 'storage/img/avatar.png' },
+                    { id: 5, title: 'Fast and Furious 10', genre: 'Action', poster: 'storage/img/fastAndFurious.png' },
                 ]);
 
                 const comingSoon = ref([
