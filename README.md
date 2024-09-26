@@ -50,6 +50,22 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 - **Asegúrate de que no esté incluido en el control de versiones:** `(añádelo al archivo .gitignore)`
 
 ### Variables de Entorno `.env`
+
+    ```json
+    MONGO_PROTOCOL="mongodb://"
+    MONGO_USER="root"
+    MONGO_PWD="campus2023"
+    MONGO_HOST="172.16.102.28"
+    MONGO_PORT=27017
+    MONGO_DB_NAME="cineCampus"
+
+    EXPRESS_PROTOCOL="http://" 
+    EXPRESS_HOST_NAME="localhost" 
+    EXPRESS_PORT=5000 
+    EXPRESS_STATIC="/home/camper/CineCampus-2/src" 
+    EXPRESS_KEY_SECRET="MyLlaveSecreta"
+    ```
+
     ```json
         MONGO_PROTOCOLO="mongodb://"
         MONGO_USER="root"

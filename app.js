@@ -77,7 +77,7 @@ app.use('/api/movimientos', movimientos);
 app.use('/api/users/', usuarios);
 app.use('/api/boletas', boletas);
 
-const PORT = process.env.PORT || 3000; // Configuración del puerto
+const PORT = process.env.PORT || 3001; // Configuración del puerto
 
 /**
  * @function app.listen
