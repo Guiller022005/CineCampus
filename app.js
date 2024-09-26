@@ -9,8 +9,8 @@ const asientos = require('./server/routes/asientos'); // Importa rutas de asient
 const movimientos = require('./server/routes/movimiento'); // Importa rutas de movimientos
 const usuarios = require('./server/routes/users'); // Importa rutas de usuarios
 const boletas = require('./server/routes/tickets'); // Importa rutas de boletas
-const log_InRouter = require('./server/routers/log-InRouter');
-require('./server/middlewares/auth');
+const log_InRouter = require('./server/routes/log-InRouter');
+require('./server/middleware/authCookies');
 
 const app = express(); // Instancia
 
@@ -34,7 +34,7 @@ app.use(passport.session());
  * @description Establece la conexión con la base de datos MongoDB utilizando la configuración en la variable de entorno.
  * Se llama al inicio de la aplicación para asegurar que la base de datos esté disponible antes de recibir solicitudes.
  */
-connectDB(); // Conecta a la base de datos
+new connectDB(); // Conecta a la base de datos
 
 app.use(express.json()); // Middleware para manejar JSON
 
@@ -57,7 +57,7 @@ app.use('/api/users/', usuarios); // Configuración de las rutas de los usuarios
 
 app.use('/api/boletas', boletas); // Configuracion de rutas de boletas
 
-const PORT = process.env.PORT || 3000; // Configuración del puerto
+const PORT = process.env.PORT || 3001; // Configuración del puerto
 
 /**
  * @function app.listen

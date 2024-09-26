@@ -13,12 +13,14 @@ module.exports = class connectMongodb{
   }
   async connectOpen(){
     try {
-      this.con = new MongoClient(`${process.env.MONGO_PROTOCOL}${this.getUser}:${this.getPassword}@${process.env.MONGO_HOST_NAME}:${process.env.MONGO_PORT}${(this.getRol != "admin users") ? `/${process.env.MONGO_DB_NAME}` : ''}`, { useNewUrlParser: true, useUnifiedTopology: true });
+      console.log("Intentando conectar a la base de datos...");
+      this.con = new MongoClient(`${process.env.MONGO_PROTOCOL}${this.getUser}:${this.getPassword}@${process.env.MONGO_HOST_NAME}:${process.env.MONGO_PORT}${(this.getRol != "adminRole") ? `/${process.env.MONGO_DB_NAME}` : ''}`, { useNewUrlParser: true, useUnifiedTopology: true });
       await this.con.connect();
       this.db = this.con.db(process.env.MONGO_DB_NAME);
+      console.log("Conexión exitosa a la base de datos");
     } catch (error){
+      console.error("Error al conectar a la base de datos:", error);
       this.con = undefined;
-      connectMongodb.instanceConnect = undefined;
       throw new Error(JSON.stringify({status: 500, Message: "Error connecting to database", error}));
     }
   }

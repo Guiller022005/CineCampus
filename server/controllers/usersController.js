@@ -1,8 +1,8 @@
 const { MongoClient } = require('mongodb'); // Importar MongoClient desde el paquete mongodb
-const user = require('../models/user');
+const user = require('../model/user');
 
 // Conexión al admin DB
-const adminUri = `${process.env.MONGO_PROTOCOLO}${process.env.MONGO_USER}:${process.env.MONGO_PWD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/admin`;
+const adminUri = `${process.env.MONGO_PROTOCOL}${process.env.MONGO_USER}:${process.env.MONGO_PWD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/admin`;
 const adminClient = new MongoClient(adminUri); // Eliminar opciones obsoletas
 
 

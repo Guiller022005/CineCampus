@@ -1,8 +1,8 @@
-const Ticket = require('../models/ticket');
-const Usuario = require('../models/user'); // Importa el modelo de Usuarios
-const Movimiento = require('../models/movimiento'); // Importa el modelo de Movimiento
-const Funcion = require('../models/funcion'); // Importa el modelo de Funcion
-const Sala = require('../models/sala'); // Importa el modelo de Sala
+const Ticket = require('../model/ticket');
+const Usuario = require('../model/user'); // Importa el modelo de Usuarios
+const Movimiento = require('../model/movimiento'); // Importa el modelo de Movimiento
+const Funcion = require('../model/funcion'); // Importa el modelo de Funcion
+const Sala = require('../model/sala'); // Importa el modelo de Sala
 
 
 // Obtener todas las boletas

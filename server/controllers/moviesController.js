@@ -1,5 +1,5 @@
 // controllers/moviesController.js
-const Pelicula = require('../models/movie'); // Asegúrate de que la ruta es correcta
+const Pelicula = require('../model/movie'); // Asegúrate de que la ruta es correcta
 
 /**
  * Controlador para manejar las operaciones relacionadas con películas.

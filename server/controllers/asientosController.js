@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { ObjectId } = require('mongodb');
-const Asiento = require('../models/asiento');
-const Funcion = require('../models/funcion');
+const Asiento = require('../model/asiento');
+const Funcion = require('../model/funcion');
 
 // Controlador para obtener todos los asientos
 exports.getAllAsientos = async (req, res) => {

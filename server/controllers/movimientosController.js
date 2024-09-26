@@ -1,7 +1,7 @@
 // controllers/movimientosController.js
 const { body, validationResult } = require('express-validator');
-const Movimiento = require('../models/movimiento');
-const User = require('../models/user'); // Asegúrate de tener el modelo del usuario importado
+const Movimiento = require('../model/movimiento');
+const User = require('../model/user'); // Asegúrate de tener el modelo del usuario importado
 const { ObjectId } = require('mongodb');
 
 
