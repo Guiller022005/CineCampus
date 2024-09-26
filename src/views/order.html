@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Ticket Booking</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #98989F;
+            font-family: 'SF Pro Text', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 375px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .back-button, .menu-button {
+            font-size: 24px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            padding: 0;
+        }
+        .title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .movie-info {
+            display: flex;
+            margin-bottom: 24px;
+        }
+        .movie-poster {
+            width: 100px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 16px;
+        }
+        .movie-details {
+            flex-grow: 1;
+        }
+        .movie-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: #FE0000;
+        }
+        .movie-text {
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+        .white-text {
+            color: #ffffff;
+        }
+        .divider {
+            height: 1px;
+            background-color: #333;
+            margin: 16px 0;
+        }
+        .order-details {
+            margin-bottom: 24px;
+            font-size: 13px;
+        }
+        .order-number {
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .payment-method {
+            background-color: #1C1C1E;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 14px;
+            font-size: 15px;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        .payment-method.selected {
+            background-color: #2C2C2E;
+        }
+        .payment-method-header {
+            display: flex;
+            align-items: center;
+        }
+        .codigo-Card{
+            display: flex;
+            flex-direction: column;
+        }
+        .card-logo {
+            width: 65px;
+            height: 40px;
+            margin-right: 12px;
+        }
+        .card-number {
+            margin-top: 4px;
+            font-size: 13px;
+        }
+        .timer {
+            background-color: #2C0B0E;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .timer-text {
+            color: #ffffff;
+        }
+        .timer-value {
+            color: #FE0000;
+        }
+        .buy-button {
+            width: 100%;
+            background-color: #FE0000;
+            color: #ffffff;
+            padding: 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+        .payment-label {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <header class="header">
+                <button class="back-button">&lt;</button>
+                <h1 class="title">Order Summary</h1>
+                <button class="menu-button">⋮</button>
+            </header>
+            
+            <div class="movie-info">
+                <img :src="movie.poster" :alt="movie.title" class="movie-poster" />
+                <div class="movie-details">
+                    <h2 class="movie-title">{{ movie.title }}</h2>
+                    <p class="movie-text">{{ movie.genre }}</p>
+                    <p class="movie-text white-text">{{ movie.theater }}</p>
+                    <p class="movie-text">{{ movie.date }}</p>
+                </div>
+            </div>
+            <div class="order-details">
+                <p class="order-number">
+                    <span class="order-number-label">ORDER NUMBER: </span>
+                    <span class="white-text">{{ orderNumber }}</span>
+                </p>
+                <div class="order-row">
+                    <span>{{ ticketCount }} TICKET</span>
+                    <span>{{ seatNumber }}</span>
+                </div>
+                <div class="divider"></div>
+                <div class="order-row">
+                    <span>REGULAR SEAT</span>
+                    <span>${{ ticketPrice.toFixed(2) }} x {{ ticketCount }}</span>
+                </div>
+                <div class="divider"></div>
+                <div class="order-row">
+                    <span>SERVICE FEE</span>
+                    <span>${{ serviceFee.toFixed(2) }} x 1</span>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <p class="payment-label white-text">Payment method</p>
+            <div class="payment-method" :class="{ selected: isSelected }" @click="toggleSelection">
+                <div class="payment-method-header">
+                    <img :src="cardLogoUrl" alt="Card Logo" class="card-logo" />
+                    <div class="codigo-Card">
+                        <span class="white-text">{{ paymentMethod }}</span>
+                        <span class="white-text card-number">•••• •••• {{ lastFourDigits }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timer">
+                <span class="timer-text">Complete your payment in</span>
+                <span class="timer-value">{{ remainingTime }}</span>
+            </div>
+            
+            <button @click="buyTicket" class="buy-button">
+                Buy ticket
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const movie = ref({
+                    title: 'Puss In Boots The Last Wish',
+                    genre: 'Adventure',
+                    theater: 'HARTONO MALL',
+                    date: 'Sun, 12 Feb 2023, 13:00',
+                    poster: '../storage/img/Rectangle 4170.png'
+                })
+                const orderNumber = ref('123456786')
+                const ticketCount = ref(1)
+                const seatNumber = ref('C5')
+                const ticketPrice = ref(24.99)
+                const serviceFee = ref(1.99)
+                const paymentMethod = ref('MasterCard')
+                const lastFourDigits = ref('0998 7865')
+                const remainingTime = ref('04:59')
+                const cardLogoUrl = ref('../storage/img/target.png')
+                const isSelected = ref(false)
+
+                const toggleSelection = () => {
+                    isSelected.value = !isSelected.value
+                }
+
+                const buyTicket = () => {
+                    alert('Ticket purchased!')
+                }
+
+                return {
+                    movie,
+                    orderNumber,
+                    ticketCount,
+                    seatNumber,
+                    ticketPrice,
+                    serviceFee,
+                    paymentMethod,
+                    lastFourDigits,
+                    remainingTime,
+                    cardLogoUrl,
+                    isSelected,
+                    toggleSelection,
+                    buyTicket
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
