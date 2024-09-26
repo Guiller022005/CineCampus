@@ -17,6 +17,7 @@
             max-width: 375px;
             margin: 0 auto;
             padding: 16px;
+            position: relative;
         }
         .header {
             display: flex;
@@ -40,6 +41,8 @@
         .movie-info {
             display: flex;
             margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
         }
         .movie-poster {
             width: 100px;
@@ -72,6 +75,8 @@
         .order-details {
             margin-bottom: 24px;
             font-size: 13px;
+            position: relative;
+            z-index: 1;
         }
         .order-number {
             font-size: 13px;
@@ -87,31 +92,57 @@
             padding: 12px;
             border-radius: 8px;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 14px;
             font-size: 15px;
-            transition: background-color 0.3s ease;
             cursor: pointer;
-        }
-        .payment-method.selected {
-            background-color: #2C2C2E;
         }
         .payment-method-header {
             display: flex;
             align-items: center;
         }
-        .codigo-Card{
+        .codigo-Card {
             display: flex;
             flex-direction: column;
         }
         .card-logo {
-            width: 65px;
-            height: 40px;
+            width: 32px;
+            height: 20px;
             margin-right: 12px;
         }
         .card-number {
             margin-top: 4px;
             font-size: 13px;
+        }
+        .payment-button {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #FE0000;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .payment-button.selected {
+            background-color: transparent;
+            border-color: #FE0000;
+        }
+        .payment-button::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #FE0000;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .payment-button.selected::after {
+            opacity: 1;
+            transform: scale(1);
         }
         .timer {
             background-color: #2C0B0E;
@@ -144,11 +175,21 @@
             font-size: 1rem;
             margin-bottom: 8px;
         }
+        .gradient-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 350px;
+            background: linear-gradient(to bottom, #4b4b52, transparent);
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
     <div id="app">
         <div class="container">
+            <div class="gradient-overlay"></div>
             <header class="header">
                 <button class="back-button">&lt;</button>
                 <h1 class="title">Order Summary</h1>
@@ -188,7 +229,7 @@
             <div class="divider"></div>
             
             <p class="payment-label white-text">Payment method</p>
-            <div class="payment-method" :class="{ selected: isSelected }" @click="toggleSelection">
+            <div class="payment-method" @click="toggleSelection">
                 <div class="payment-method-header">
                     <img :src="cardLogoUrl" alt="Card Logo" class="card-logo" />
                     <div class="codigo-Card">
@@ -196,6 +237,7 @@
                         <span class="white-text card-number">•••• •••• {{ lastFourDigits }}</span>
                     </div>
                 </div>
+                <div class="payment-button" :class="{ selected: isSelected }"></div>
             </div>
             
             <div class="timer">
@@ -237,7 +279,7 @@
                 }
 
                 const buyTicket = () => {
-                    alert('Ticket purchased!')
+                    alert('Ticket bought!')
                 }
 
                 return {
