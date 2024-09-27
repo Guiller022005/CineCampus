@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cinema UI Kit</title>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/vue@3.2.47/dist/vue.global.js"></script>
   <style>
     body {
       margin: 0;
@@ -65,23 +65,27 @@
   </div>
 
   <script>
-    new Vue({
-      el: '#app',
-      data: {
-        title: 'Welcome to CINEMA',
-        subtitle: 'CINEMA UI KIT'
+    const app = Vue.createApp({
+      data() {
+        return {
+          title: 'Welcome to CINEMA',
+          subtitle: 'CINEMA UI KIT'
+        };
       },
       methods: {
         createAccount() {
-          alert('Create Account clicked!');
-          // Agrega la lógica para crear cuenta
+          // Redirigir a sign-Up.html
+          window.location.href = 'sign-Up.html'; // Asegúrate de que la ruta sea correcta
         },
         login() {
-          alert('Login clicked!');
-          // Agrega la lógica para el login
+          // Redirigir a sign-Up.html
+          window.location.href = 'log-in.html'; // Asegúrate de que la ruta sea correcta
         }
       }
     });
+  
+    app.mount('#app'); // Montar la aplicación en el elemento con id "app"
   </script>
+  
 </body>
 </html>
