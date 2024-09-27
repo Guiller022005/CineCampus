@@ -1,387 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cinema App</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <style>
-        /* Add this to your existing CSS */
-        body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #000;
-    color: #fff;
-}
-
-.app {
-    max-width: 414px;
-    margin: 0 auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-}
-
-.user-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
-.notification-container {
-    background-color: #333;
-    border-radius: 20%;
-    padding: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.notification-icon {
-    width: 24px;
-    height: 24px;
-}
-
-.search-bar {
-    position: relative;
-    margin: 10px 40px 10px 10px;
-    display: flex; /* Usar flexbox para alinear la imagen y el input */
-    align-items: center; /* Centra verticalmente los elementos */
-}
-
-.search-bar input {
-    width: 100%;
-    padding: 20px 15px 12px 45px; /* Ajustar el padding para dar espacio a la lupa */
-    border-radius: 10px;
-    border: 1px solid #333;
-    background-color: #222;
-    color: #fff;
-}
-
-.search-icon {
-    position: absolute;
-    left: 15px; /* Ajustar la posición de la lupa dentro del input */
-    top: 50%;
-    transform: translateY(-50%);
-    width: 24px;
-    height: 24px;
-}
-
-
-main {
-    flex-grow: 1;
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.section-header a {
-    color: red;
-    text-decoration: none;
-}
-.section-header h2{
-    font-size: 1rem;
-}
-
-.movie-carousel {
-    display: flex;
-    overflow-x: auto;
-    gap: 15px;
-    margin-bottom: 10px;
-  }
-  .movie-info {
-    margin-top: -15px;
-  }
-  
-  .movie-poster {
-    flex-shrink: 0;
-    width: 120px;
-    
-  }
-  
-  .movie-poster img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  .movie-poster h3{
-    font-size: 1rem;
-  }
-
-.carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    margin-bottom: 20px;
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    background-color: #fff;
-    border-radius: 50%;
-    transition: width 0.3s;
-}
-
-.dot.active {
-    width: 70px; /* Ancho del punto activo */
-    height: 7px;
-    border-radius: 15%;
-    background-color: red; /* Color rojo para el punto activo */
-}
-
-
-.dot:first-child {
-    background-color: red;
-}
-
-.coming-soon-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.coming-soon-item img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-right: 15px;
-}
-
-.movie-list {
-    padding-bottom: 70px;
-}
-
-.app-footer {
-    position: fixed; /* Fijar el footer en la parte inferior */
-    bottom: 0; /* Alinea el footer en la parte inferior */
-    left: 0; /* Alinea a la izquierda */
-    right: 0; /* Alinea a la derecha */
-    margin-top: auto; /* Mantiene el margen superior automático */
-    z-index: 10;
-}
-
-.app-footer nav {
-    display: flex;
-    justify-content: space-around;
-    background-color: #111;
-    padding: 15px 0;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-}
-
-.app-footer button {
-    background: none;
-    border: none;
-    color: #555;
-    cursor: pointer;
-    padding: 10px;
-    font-size: 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.app-footer button img {
-    width: 44px;
-    height: 44px;
-    margin-bottom: 5px;
-}
-
-.app-footer button.active {
-    color: red;
-}
-
-.app-footer button.active img {
-    color: red;
-}
-
-
-        /* Add any other styles from your existing CSS */
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cinema UI Kit</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url('storage/img/path-to-your-logo.svg') no-repeat center center; /* Cambiar esta ruta por la de tu SVG */
+      background-size: cover;
+      font-family: 'Arial', sans-serif;
+      flex-direction: column; /* Cambiar a columna para que el contenido se apile verticalmente */
+    }
+    .face {
+      font-size: 70px;
+      color: #ff4c4c;
+    }
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+      color: black;
+      margin-top: 20px;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: gray;
+      margin-bottom: 20px;
+    }
+    .actions {
+      margin-top: 34vh; /* Ajustar el margen superior para mover los botones hacia abajo */
+    }
+    .btn {
+      display: block;
+      width: 57vw;
+      padding: 15px;
+      margin-top: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .btn-create {
+      background-color: #FE0000;
+      color: white;
+    }
+    .btn-login {
+      background-color: #f4f4f4;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
 <body>
-    <div id="app" class="app">
-        <!-- Your existing header code -->
-
-        <main>
-                <header>
-                    <div class="user-info">
-                        <img src="storage/img/miguel.svg" alt="User Profile" class="user-avatar">
-                        <div>
-                            <p>Hi, {{ username }}!</p>
-                            <p>Let's watch a movie together!</p>
-                        </div>
-                    </div>
-                    <div class="notification-container">
-                        <img src="storage/img/bell-icon.svg" alt="Notifications" class="notification-icon">
-                    </div>
-                </header>
-
-        <div class="search-bar" ref="search-bar">
-            <img src="storage/img/magnifying-glass.svg" alt="Search" class="search-icon">
-            <input type="text" v-model="searchQuery" placeholder="Search movie, cinema, genre...">
-        </div>
-                <div class="section-header">
-                    <h2>Now playing</h2>
-                    <a href="#">See all</a>
-                </div>
-                <div class="movie-carousel" ref="movieCarousel" @scroll="handleScroll">
-                    <div v-for="movie in nowPlaying" :key="movie.id" class="movie-poster">
-                        <img :src="movie.poster" :alt="movie.title">
-                    </div>
-                </div>
-                <div class="movie-info" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 5px;">
-                    <h3>{{ nowPlaying[activeIndex].title }}</h3>
-                    <small>{{ nowPlaying[activeIndex].genre }}</small>
-                </div>
-                <div class="carousel-dots">
-                    <span 
-                        v-for="(_, index) in nowPlaying" 
-                        :key="index" 
-                        :class="['dot', { active: index === activeIndex }]"
-                    ></span>
-                </div>
-            </section>
-            <section class="coming-soon">
-                <div class="section-header">
-                    <h2>Coming soon</h2>
-                    <a href="#">See all</a>
-                </div>
-                <div class="movie-list">
-                    <div v-for="movie in comingSoon" :key="movie.id" class="coming-soon-item">
-                        <img :src="movie.poster" :alt="movie.title">
-                        <div>
-                            <h3>{{ movie.title }}</h3>
-                            <p>{{ movie.releaseDate }}</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Your existing coming soon section -->
-        </main>
-        <footer class="app-footer">
-            <nav>
-                <button :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'">
-                    <img src="storage/img/home-icon.svg" alt="Home">
-                </button>
-                <button :class="{ active: activeTab === 'browse' }" @click="scrollToSearchBar">
-                    <img src="storage/img/browse-icon.svg" alt="Browse">
-                </button>
-                <button :class="{ active: activeTab === 'tickets' }" @click="activeTab = 'tickets'">
-                    <img src="storage/img/tickets-icon.svg" alt="Tickets">
-                </button>
-                <button :class="{ active: activeTab === 'profile' }" @click="activeTab = 'profile'">
-                    <img src="storage/img/profile-icon.svg" alt="Profile">
-                </button>
-            </nav>
-        </footer>
-        <!-- Your existing footer -->
+  <div id="app">
+    <div class="actions">
+      <button class="btn btn-create" @click="createAccount">Create Account</button>
+      <button class="btn btn-login" @click="login">Login</button>
     </div>
+  </div>
 
-    <script>
-        const { createApp, ref, onMounted, onUnmounted } = Vue;
-
-        createApp({
-            setup() {
-                const username = ref('Miguel Castro');
-                const searchQuery = ref('');
-                const activeTab = ref('home');
-                const activeIndex = ref(0);
-                const movieCarousel = ref(null);
-
-                const nowPlaying = ref([
-                    { id: 1, title: 'Avatar', genre: 'Adventure', poster: 'storage/img/avatar.png' },
-                    { id: 2, title: 'Puss In Boots The Last...', genre: 'Adventure', poster: 'storage/img/Rectangle 4170.png' },
-                    { id: 3, title: 'Fast X', genre: 'Action', poster: 'storage/img/fastAndFurious.png' },
-                    { id: 4, title: 'Fast and Furious 9', genre: 'Action', poster: 'storage/img/avatar.png' },
-                    { id: 5, title: 'Fast and Furious 10', genre: 'Action', poster: 'storage/img/fastAndFurious.png' },
-                ]);
-
-                const comingSoon = ref([
-                    { id: 6, title: 'Furious 10', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 8, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 9, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 10, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 11, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 12, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 13, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                ]);
-                
-                let intervalId;
-
-                const handleScroll = () => {
-                    if (movieCarousel.value) {
-                        const scrollPosition = movieCarousel.value.scrollLeft;
-                        const itemWidth = movieCarousel.value.offsetWidth;
-                        activeIndex.value = Math.round(scrollPosition / itemWidth);
-                    }
-                };
-
-
-                const startAutoScroll = () => {
-                    intervalId = setInterval(() => {
-                        if (movieCarousel.value) {
-                            const nextIndex = (activeIndex.value + 1) % nowPlaying.value.length;
-                            movieCarousel.value.scrollTo({
-                                left: nextIndex * movieCarousel.value.offsetWidth,
-                                behavior: 'smooth'
-                            });
-                            activeIndex.value = nextIndex;
-                        }
-                    }, 5000);
-                };
-
-                // Método para desplazar a la barra de búsqueda
-                const scrollToSearchBar = () => {
-                    const searchBar = document.querySelector('.search-bar');
-                    searchBar.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Desplazamiento suave
-                    searchBar.querySelector('input').focus(); // Enfocar el input de búsqueda
-                };
-
-
-                onMounted(() => {
-                    startAutoScroll();
-                });
-
-                onUnmounted(() => {
-                    clearInterval(intervalId);
-                });
-
-                return {
-                    username,
-                    searchQuery,
-                    activeTab,
-                    nowPlaying,
-                    comingSoon,
-                    activeIndex,
-                    movieCarousel,
-                    handleScroll,
-                    scrollToSearchBar,
-                };
-            }
-        }).mount('#app');
-    </script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        title: 'Welcome to CINEMA',
+        subtitle: 'CINEMA UI KIT'
+      },
+      methods: {
+        createAccount() {
+          alert('Create Account clicked!');
+          // Agrega la lógica para crear cuenta
+        },
+        login() {
+          alert('Login clicked!');
+          // Agrega la lógica para el login
+        }
+      }
+    });
+  </script>
 </body>
 </html>
