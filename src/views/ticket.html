@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Ticket</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'SF Pro Text', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 375px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .back-button, .menu-button {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+        }
+        .title {
+            font-size: 17px;
+            font-weight: 600;
+        }
+        .ticket {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            color: #000000;
+        }
+        .movie-poster {
+            margin: 10px 10px 10px 10px;
+            width: 86vw;
+            height: 156px;
+            object-fit: cover;
+        }
+        .ticket-content {
+            padding: 16px;
+        }
+        .movie-title {
+            margin-top: -5px;
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .lineWhite img {
+            width: 80vw;
+        }
+        .ticket-instruction {
+            color: #98989F;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+        .ticket-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .detail-label {
+            color: #98989F;
+        }
+        .detail-value {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        .cinema-logo {
+            width: 20px;
+            height: 20px;
+            margin-left: 8px;
+        }
+        .barcode-placeholder {
+            background-color: #f0f0f0;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 16px;
+            color: #98989F;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <header class="header">
+                <button class="back-button">&lt;</button>
+                <h1 class="title">Ticket</h1>
+                <button class="menu-button">⋮</button>
+            </header>
+            
+            <div class="ticket">
+                <img :src="movie.poster" :alt="movie.title" class="movie-poster" />
+                <div class="ticket-content">
+                    <h2 class="movie-title">{{ movie.title }}</h2>
+                    <p class="ticket-instruction">Show this ticket at the entrance</p>
+                    <div class="lineWhite">
+                        <img class="imgline" src="../storage/img/Line 60.svg">
+                    </div>
+                    <div class="ticket-detail">
+                        <span class="detail-label">Cinema</span>
+                        <span class="detail-value">
+                            {{ movie.theater }}
+                            <img :src="cinemaLogo" alt="Cinema logo" class="cinema-logo">
+                        </span>
+                    </div>
+                    <div class="ticket-detail">
+                        <span class="detail-label">Date</span>
+                        <span class="detail-value">{{ movie.date }}</span>
+                    </div>
+                    <div class="ticket-detail">
+                        <span class="detail-label">Time</span>
+                        <span class="detail-value">{{ movie.time }}</span>
+                    </div>
+                    <div class="ticket-detail">
+                        <span class="detail-label">Cinema Hall #</span>
+                        <span class="detail-value">{{ movie.cinemaHall }}</span>
+                    </div>
+                    <div class="ticket-detail">
+                        <span class="detail-label">Seat</span>
+                        <span class="detail-value">{{ movie.seat }}</span>
+                    </div>
+                    <div class="ticket-detail">
+                        <span class="detail-label">Cost</span>
+                        <span class="detail-value">${{ movie.cost.toFixed(2) }}</span>
+                    </div>
+                    <div class="ticket-detail">
+                        <span class="detail-label">Order ID</span>
+                        <span class="detail-value">{{ movie.orderId }}</span>
+                    </div>
+                    <img src="../storage/img/lineaTickets.png">
+                    <div class="barcode-placeholder">
+                        Barcode placeholder
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const movie = ref({
+                    title: 'Puss In Boots The Last Wish',
+                    poster: '../storage/img/Rectangle 4170.png',
+                    theater: 'HARTONO MALL 12',
+                    date: 'Sun, Feb 12th 2023',
+                    time: '13:00',
+                    cinemaHall: 'Cinema A',
+                    seat: 'C5',
+                    cost: 26.99,
+                    orderId: '12345678'
+                })
+                const cinemaLogo = ref('../storage/img/target.png')
+
+                return {
+                    movie,
+                    cinemaLogo
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
