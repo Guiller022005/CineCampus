@@ -63,23 +63,38 @@
             font-size: 13px;
             margin-bottom: 16px;
         }
-        .ticket-detail {
+        .ticket-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+        .detail-group {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
+            flex-direction: column;
         }
         .detail-label {
             color: #98989F;
+            font-size: 12px;
+            margin-bottom: 4px;
         }
         .detail-value {
             font-weight: 600;
+            font-size: 14px;
+        }
+        .cinema-group {
+            grid-column: 1 / -1;
             display: flex;
+            justify-content: space-between;
             align-items: center;
         }
+        .cinema-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
         .cinema-logo {
-            width: 20px;
-            height: 20px;
-            margin-left: 8px;
+            width: 45px;
+            height: 45px;
         }
         .barcode-placeholder {
             background-color: #f0f0f0;
@@ -109,36 +124,38 @@
                     <div class="lineWhite">
                         <img class="imgline" src="../storage/img/Line 60.svg">
                     </div>
-                    <div class="ticket-detail">
-                        <span class="detail-label">Cinema</span>
-                        <span class="detail-value">
-                            {{ movie.theater }}
+                    <div class="ticket-details">
+                        <div class="cinema-group">
+                            <div class="detail-group">
+                                <span class="detail-label">Cinema</span>
+                                <span class="cinema-name">{{ movie.theater }}</span>
+                            </div>
                             <img :src="cinemaLogo" alt="Cinema logo" class="cinema-logo">
-                        </span>
-                    </div>
-                    <div class="ticket-detail">
-                        <span class="detail-label">Date</span>
-                        <span class="detail-value">{{ movie.date }}</span>
-                    </div>
-                    <div class="ticket-detail">
-                        <span class="detail-label">Time</span>
-                        <span class="detail-value">{{ movie.time }}</span>
-                    </div>
-                    <div class="ticket-detail">
-                        <span class="detail-label">Cinema Hall #</span>
-                        <span class="detail-value">{{ movie.cinemaHall }}</span>
-                    </div>
-                    <div class="ticket-detail">
-                        <span class="detail-label">Seat</span>
-                        <span class="detail-value">{{ movie.seat }}</span>
-                    </div>
-                    <div class="ticket-detail">
-                        <span class="detail-label">Cost</span>
-                        <span class="detail-value">${{ movie.cost.toFixed(2) }}</span>
-                    </div>
-                    <div class="ticket-detail">
-                        <span class="detail-label">Order ID</span>
-                        <span class="detail-value">{{ movie.orderId }}</span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Date</span>
+                            <span class="detail-value">{{ movie.date }}</span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Time</span>
+                            <span class="detail-value">{{ movie.time }}</span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Cinema Hall #</span>
+                            <span class="detail-value">{{ movie.cinemaHall }}</span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Seat</span>
+                            <span class="detail-value">{{ movie.seat }}</span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Cost</span>
+                            <span class="detail-value">${{ movie.cost.toFixed(2) }}</span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Order ID</span>
+                            <span class="detail-value">{{ movie.orderId }}</span>
+                        </div>
                     </div>
                     <img src="../storage/img/lineaTickets.png">
                     <div class="barcode-placeholder">
@@ -165,7 +182,7 @@
                     cost: 26.99,
                     orderId: '12345678'
                 })
-                const cinemaLogo = ref('../storage/img/target.png')
+                const cinemaLogo = ref('https://yt3.googleusercontent.com/eJG_qiZmgwaP8iEXJqiFZxVKGWJBAwPOpf3JiF2e2-ruu668j-RKXCXwSi7ZdRRhBrPyWW_E=s900-c-k-c0x00ffffff-no-rj')
 
                 return {
                     movie,
