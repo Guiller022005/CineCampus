@@ -227,19 +227,19 @@ main {
         <main>
                 <header>
                     <div class="user-info">
-                        <img src="storage/img/miguel.svg" alt="User Profile" class="user-avatar">
+                        <img src="../storage/img/miguel.svg" alt="User Profile" class="user-avatar">
                         <div>
                             <p>Hi, {{ username }}!</p>
                             <p>Let's watch a movie together!</p>
                         </div>
                     </div>
                     <div class="notification-container">
-                        <img src="storage/img/bell-icon.svg" alt="Notifications" class="notification-icon">
+                        <img src="../storage/img/bell-icon.svg" alt="Notifications" class="notification-icon">
                     </div>
                 </header>
 
         <div class="search-bar" ref="search-bar">
-            <img src="storage/img/magnifying-glass.svg" alt="Search" class="search-icon">
+            <img src="../storage/img/magnifying-glass.svg" alt="Search" class="search-icon">
             <input type="text" v-model="searchQuery" placeholder="Search movie, cinema, genre...">
         </div>
                 <div class="section-header">
@@ -284,16 +284,16 @@ main {
         <footer class="app-footer">
             <nav>
                 <button :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'">
-                    <img src="storage/img/home-icon.svg" alt="Home">
+                    <img src="../storage/img/home-icon.svg" alt="Home">
                 </button>
                 <button :class="{ active: activeTab === 'browse' }" @click="scrollToSearchBar">
-                    <img src="storage/img/browse-icon.svg" alt="Browse">
+                    <img src="../storage/img/browse-icon.svg" alt="Browse">
                 </button>
                 <button :class="{ active: activeTab === 'tickets' }" @click="activeTab = 'tickets'">
-                    <img src="storage/img/tickets-icon.svg" alt="Tickets">
+                    <img src="../storage/img/tickets-icon.svg" alt="Tickets">
                 </button>
                 <button :class="{ active: activeTab === 'profile' }" @click="activeTab = 'profile'">
-                    <img src="storage/img/profile-icon.svg" alt="Profile">
+                    <img src="../storage/img/profile-icon.svg" alt="Profile">
                 </button>
             </nav>
         </footer>
@@ -312,21 +312,21 @@ main {
                 const movieCarousel = ref(null);
 
                 const nowPlaying = ref([
-                    { id: 1, title: 'Avatar', genre: 'Adventure', poster: 'storage/img/avatar.png' },
-                    { id: 2, title: 'Puss In Boots The Last...', genre: 'Adventure', poster: 'storage/img/Rectangle 4170.png' },
-                    { id: 3, title: 'Fast X', genre: 'Action', poster: 'storage/img/fastAndFurious.png' },
-                    { id: 4, title: 'Fast and Furious 9', genre: 'Action', poster: 'storage/img/avatar.png' },
-                    { id: 5, title: 'Fast and Furious 10', genre: 'Action', poster: 'storage/img/fastAndFurious.png' },
+                    { id: 1, title: 'Avatar', genre: 'Adventure', poster: '../storage/img/avatar.png' },
+                    { id: 2, title: 'Puss In Boots The Last...', genre: 'Adventure', poster: '../storage/img/Rectangle 4170.png' },
+                    { id: 3, title: 'Fast X', genre: 'Action', poster: '../storage/img/fastAndFurious.png' },
+                    { id: 4, title: 'Fast and Furious 9', genre: 'Action', poster: '../storage/img/avatar.png' },
+                    { id: 5, title: 'Fast and Furious 10', genre: 'Action', poster: '../storage/img/fastAndFurious.png' },
                 ]);
 
                 const comingSoon = ref([
-                    { id: 6, title: 'Furious 10', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 8, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 9, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 10, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 11, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 12, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
-                    { id: 13, title: 'Upcoming Movie 2', releaseDate: '2023', poster: 'storage/img/Madmax.svg' },
+                    { id: 6, title: 'Furious 10', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
+                    { id: 8, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
+                    { id: 9, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
+                    { id: 10, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
+                    { id: 11, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
+                    { id: 12, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
+                    { id: 13, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
                 ]);
                 
                 let intervalId;

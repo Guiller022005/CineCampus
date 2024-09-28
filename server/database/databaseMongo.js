@@ -43,3 +43,4 @@ module.exports = class connectMongodb{
     return this.#rol;
   }
 }
+

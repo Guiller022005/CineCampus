@@ -1,0 +1,178 @@
+body {
+    background-color: #000000;
+    color: #98989F;
+    font-family: 'SF Pro Text', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 375px;
+    margin: 0 auto;
+    padding: 16px;
+    position: relative;
+}
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+}
+.back-button, .menu-button {
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    padding: 0;
+}
+.title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 600;
+    color: #ffffff;
+}
+.movie-info {
+    display: flex;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+}
+.movie-poster {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 16px;
+}
+.movie-details {
+    flex-grow: 1;
+}
+.movie-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #FE0000;
+}
+.movie-text {
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+.white-text {
+    color: #ffffff;
+}
+.divider {
+    height: 1px;
+    background-color: #333;
+    margin: 16px 0;
+}
+.order-details {
+    margin-bottom: 24px;
+    font-size: 13px;
+    position: relative;
+    z-index: 1;
+}
+.order-number {
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+.order-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.payment-method {
+    background-color: #1C1C1E;
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+    font-size: 15px;
+    cursor: pointer;
+}
+.payment-method-header {
+    display: flex;
+    align-items: center;
+}
+.codigo-Card {
+    display: flex;
+    flex-direction: column;
+}
+.card-logo {
+    width: 32px;
+    height: 20px;
+    margin-right: 12px;
+}
+.card-number {
+    margin-top: 4px;
+    font-size: 13px;
+}
+.payment-button {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #FE0000;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+.payment-button.selected {
+    background-color: transparent;
+    border-color: #FE0000;
+}
+.payment-button::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #FE0000;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.payment-button.selected::after {
+    opacity: 1;
+    transform: scale(1);
+}
+.timer {
+    background-color: #2C0B0E;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.timer-text {
+    color: #ffffff;
+}
+.timer-value {
+    color: #FE0000;
+}
+.buy-button {
+    width: 100%;
+    background-color: #FE0000;
+    color: #ffffff;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+.payment-label {
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+.gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 350px;
+    background: linear-gradient(to bottom, #4b4b52, transparent);
+    pointer-events: none;
+}

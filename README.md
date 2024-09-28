@@ -42,7 +42,7 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 1. Asegúrate de que MongoDB esté ejecutándose en tu máquina.
 2. Creación del Archivo .env
 3. Inicia el servidor con `node app.js`.
-4. Accede a la API a través de `http://localhost:3000/api/movies`.
+4. Accede a la API a través de `http://localhost:3000/api/peliculas`.
 
 ## Creación del Archivo .env
 - **En la raíz del proyecto:** `crea un archivo llamado .env`
@@ -52,6 +52,14 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 ### Variables de Entorno `.env`
 
     ```json
+    MONGO_PROTOCOLO="mongodb://"
+    MONGO_USER="Karen"
+    MONGO_PWD="12345"
+    MONGO_HOST="172.16.102.35"
+    MONGO_PORT=27017
+    MONGO_DB_NAME="cineCampus"
+
+
     MONGO_PROTOCOL="mongodb://"
     MONGO_USER="root"
     MONGO_PWD="campus2023"

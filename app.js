@@ -3,6 +3,7 @@ const express = require('express'); // Framework para manejar el servidor
 const session = require('express-session'); // Middleware para manejar sesiones
 const passport = require('passport'); // Middleware para manejar autenticación
 const connectDB = require('./server/config/db'); // Importa la función de conexión a la base de datos MongoDB
+const connectDB = require('./server/config/db'); // Importa la función de conexión a la base de datos MongoDB
 const movies = require('./server/routes/movies'); // Importa rutas de películas
 const asientos = require('./server/routes/asientos'); // Importa rutas de asientos
 const movimientos = require('./server/routes/movimiento'); // Importa rutas de movimientos
@@ -11,9 +12,7 @@ require('./server/middlewares/auth');
 
 const app = express(); // Instancia
 
-
 app.use("/login", log_InRouter);
-
 
 // Configuración de sesión
 app.use(session({
@@ -77,7 +76,7 @@ app.use('/api/movimientos', movimientos);
 app.use('/api/users/', usuarios);
 app.use('/api/boletas', boletas);
 
-const PORT = process.env.PORT || 3001; // Configuración del puerto
+const PORT = process.env.PORT || 3000; // Configuración del puerto
 
 /**
  * @function app.listen
