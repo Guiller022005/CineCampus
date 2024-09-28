@@ -1,0 +1,150 @@
+body {
+    font-family: 'SF Pro Text', Arial, sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+.choose-seat {
+    max-width: 414px;
+    margin: 0 auto;
+    padding: 20px;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.back-button, .more-options {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+}
+h1 {
+    font-size: 18px;
+    font-weight: 600;
+}
+.screen {
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.screen span {
+    font-size: 12px;
+    color: #888888;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.seating-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.seat-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.row-label {
+    width: 20px;
+    text-align: center;
+}
+
+.shift-right {
+    margin-left: 35px; /* Ajusta el valor para que corresponda al tamaño del asiento */
+}
+
+/* Mover la fila A más a la derecha */
+.seat-row:nth-of-type(1) {
+    margin-left: 70px; /* Ajusta este valor para mover más la fila A */
+}
+
+/* Mover la fila B ligeramente a la derecha */
+.seat-row:nth-of-type(2) {
+    margin-left: 35px; /* Ajusta este valor según sea necesario para la fila B */
+}
+
+.seat {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.seat.available {
+    background-color: #333333;
+}
+.seat.reserved {
+    background-color: #ffffff;
+}
+.seat.selected {
+    background-color: #FF3B30;
+    color: #ffffff;
+}
+.legend {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.seat-sample {
+    width: 15px;
+    height: 15px;
+    border-radius: 3px;
+}
+.date-selection, .time-selection {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+.date-button, .time-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #1C1C1E;
+    color: #ffffff;
+    cursor: pointer;
+}
+.day span {
+    color: #888888;
+}
+
+.date-button.active, .time-button.active {
+    background-color: #FF3B30;
+}
+.booking-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.total-price {
+    font-size: 18px;
+    font-weight: bold;
+}
+.buy-ticket {
+    background-color: #FF3B30;
+    color: #ffffff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}

@@ -1,0 +1,172 @@
+body {
+    font-family: 'SF Pro Text', Arial, sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+.cinema-selection {
+    max-width: 414px;
+    margin: 0 auto;
+    padding: 20px;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.back-button, .more-options {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 28px;
+    cursor: pointer;
+}
+h1 {
+    font-size: 18px;
+    font-weight: 600;
+}
+.movie-details {
+    margin-bottom: 24px;
+}
+.movie-poster {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+.movie-poster {
+    height: 204px;
+}
+.movie-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1px;
+}
+
+h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+h2 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 1px;
+}
+.movie-genres {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+.movie-genres span {
+    font-size: 0.7rem;
+    color: #888888;
+}
+.movie-description {
+    font-size: 12px;
+    line-height: 1.4;
+    margin-bottom: -18px;
+}
+.watch-trailer {
+    background: #FE0000;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    padding: 5px 16px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+.cast, .cinema {
+    margin-bottom: -15px;
+}
+h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.cast-list {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+}
+.cast-member {
+    display: flex;
+    flex-direction: row; /* Mantén la imagen y el texto en una fila */
+    text-align: center; /* Alinea verticalmente al centro */
+}
+
+.actor-details {
+    display: flex;
+    flex-direction: column; /* Apila el nombre y el personaje en columna */
+    margin-left: 2px; /* Espacio entre la imagen y los textos */
+}
+
+.actor-name {
+    font-size: 8px;
+    font-weight: 600;
+    width: 102px;
+    height: 0px;
+}
+
+.character-name {
+    font-size: 10px;
+    color: #888888;
+}
+
+.cast-member img {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+}
+.actor-name {
+    font-size: 10px;
+    font-weight: 600;
+}
+.character-name {
+    font-size: 10px;
+    color: #888888;
+}
+.cinema-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1C1C1E;
+    border-radius: 12px;
+    height: 6vh;
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: border 0.3s;
+}
+
+.selected {
+    border: 2px solid red; /* Borde rojo */
+}
+.cinema-info h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+.cinema-info p {
+    font-size: 14px;
+    color: #888888;
+}
+.cinema-logo {
+    width: 40px;
+    height: 40px;
+}
+.book-now {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #FF3B30;
+    color: #ffffff;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}

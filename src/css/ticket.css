@@ -1,0 +1,99 @@
+body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'SF Pro Text', 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 375px;
+    margin: 0 auto;
+    padding: 16px;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.back-button, .menu-button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+}
+.title {
+    font-size: 17px;
+    font-weight: 600;
+}
+.ticket {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    color: #000000;
+}
+.movie-poster {
+    margin: 10px 10px 10px 10px;
+    width: 86vw;
+    height: 156px;
+    object-fit: cover;
+}
+.ticket-content {
+    padding: 16px;
+}
+.movie-title {
+    margin-top: -5px;
+    font-size: 23px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+.lineWhite img {
+    width: 80vw;
+}
+.ticket-instruction {
+    color: #98989F;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+.ticket-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+.detail-group {
+    display: flex;
+    flex-direction: column;
+}
+.detail-label {
+    color: #98989F;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+.detail-value {
+    font-weight: 600;
+    font-size: 14px;
+}
+.cinema-group {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cinema-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+.cinema-logo {
+    width: 45px;
+    height: 45px;
+}
+.barcode-placeholder {
+    background-color: #f0f0f0;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+    color: #98989F;
+}

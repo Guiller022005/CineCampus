@@ -1,6 +1,6 @@
 const layout = require('express').Router();
 const cookieParser = require('cookie-parser');
-const { authLogged } = require('../middleware/authCookies');
+const { authLogged } = require('../middlewares/authCookies');
 const { join } = require('path');
 
 layout.get("/", cookieParser(), authLogged, (req, res)=>{
