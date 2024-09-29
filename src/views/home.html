@@ -222,38 +222,38 @@ main {
 </head>
 <body>
     <div id="app" class="app">
-        <!-- Your existing header code -->
-
-        <main>
-                <header>
-                    <div class="user-info">
-                        <img src="../storage/img/miguel.svg" alt="User Profile" class="user-avatar">
-                        <div>
-                            <p>Hi, {{ username }}!</p>
-                            <p>Let's watch a movie together!</p>
-                        </div>
-                    </div>
-                    <div class="notification-container">
-                        <img src="../storage/img/bell-icon.svg" alt="Notifications" class="notification-icon">
-                    </div>
-                </header>
+        <header>
+            <div class="user-info">
+                <img src="../storage/img/miguel.svg" alt="User Profile" class="user-avatar">
+                <div>
+                    <p>Hi, {{ username }}!</p>
+                    <p>Let's watch a movie together!</p>
+                </div>
+            </div>
+            <div class="notification-container">
+                <img src="../storage/img/bell-icon.svg" alt="Notifications" class="notification-icon">
+            </div>
+        </header>
 
         <div class="search-bar" ref="search-bar">
             <img src="../storage/img/magnifying-glass.svg" alt="Search" class="search-icon">
             <input type="text" v-model="searchQuery" placeholder="Search movie, cinema, genre...">
         </div>
+
+        <main>
+            <section class="now-playing">
                 <div class="section-header">
                     <h2>Now playing</h2>
                     <a href="#">See all</a>
                 </div>
                 <div class="movie-carousel" ref="movieCarousel" @scroll="handleScroll">
-                    <div v-for="movie in nowPlaying" :key="movie.id" class="movie-poster">
-                        <img :src="movie.poster" :alt="movie.title">
+                    <div v-for="movie in nowPlaying" :key="movie._id" class="movie-poster">
+                        <img :src="movie.img" :alt="movie.titulo">
                     </div>
                 </div>
                 <div class="movie-info" style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-bottom: 5px;">
-                    <h3>{{ nowPlaying[activeIndex].title }}</h3>
-                    <small>{{ nowPlaying[activeIndex].genre }}</small>
+                    <h3>{{ nowPlaying[activeIndex]?.titulo }}</h3>
+                    <small>{{ nowPlaying[activeIndex]?.genero.join(', ') }}</small>
                 </div>
                 <div class="carousel-dots">
                     <span 
@@ -263,6 +263,7 @@ main {
                     ></span>
                 </div>
             </section>
+
             <section class="coming-soon">
                 <div class="section-header">
                     <h2>Coming soon</h2>
@@ -278,9 +279,8 @@ main {
                     </div>
                 </div>
             </section>
-
-            <!-- Your existing coming soon section -->
         </main>
+
         <footer class="app-footer">
             <nav>
                 <button :class="{ active: activeTab === 'home' }" @click="activeTab = 'home'">
@@ -297,7 +297,6 @@ main {
                 </button>
             </nav>
         </footer>
-        <!-- Your existing footer -->
     </div>
 
     <script>
@@ -311,25 +310,28 @@ main {
                 const activeIndex = ref(0);
                 const movieCarousel = ref(null);
 
-                const nowPlaying = ref([
-                    { id: 1, title: 'Avatar', genre: 'Adventure', poster: '../storage/img/avatar.png' },
-                    { id: 2, title: 'Puss In Boots The Last...', genre: 'Adventure', poster: '../storage/img/Rectangle 4170.png' },
-                    { id: 3, title: 'Fast X', genre: 'Action', poster: '../storage/img/fastAndFurious.png' },
-                    { id: 4, title: 'Fast and Furious 9', genre: 'Action', poster: '../storage/img/avatar.png' },
-                    { id: 5, title: 'Fast and Furious 10', genre: 'Action', poster: '../storage/img/fastAndFurious.png' },
-                ]);
-
+                const nowPlaying = ref([]);
                 const comingSoon = ref([
-                    { id: 6, title: 'Furious 10', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
-                    { id: 8, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
-                    { id: 9, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
-                    { id: 10, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
-                    { id: 11, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
-                    { id: 12, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
-                    { id: 13, title: 'Upcoming Movie 2', releaseDate: '2023', poster: '../storage/img/Madmax.svg' },
+                    { id: 1, title: 'Oppenheimer', releaseDate: 'July 21, 2023', poster: '../storage/img/Oppenheimer.png' },
+                    { id: 2, title: 'Barbie', releaseDate: 'July 21, 2023', poster: '../storage/img/Barbie.png' }
                 ]);
                 
                 let intervalId;
+
+                const fetchNowPlayingMovies = async () => {
+                    try {
+                        const response = await fetch('http://localhost:3000/api/movies/cartelera');
+                        const data = await response.json();
+                        nowPlaying.value = data.map(movie => ({
+                            _id: movie._id,
+                            titulo: movie.titulo,
+                            genero: movie.genero,
+                            img: movie.img
+                        }));
+                    } catch (error) {
+                        console.error('Error al obtener películas:', error);
+                    }
+                };
 
                 const handleScroll = () => {
                     if (movieCarousel.value) {
@@ -339,10 +341,9 @@ main {
                     }
                 };
 
-
                 const startAutoScroll = () => {
                     intervalId = setInterval(() => {
-                        if (movieCarousel.value) {
+                        if (movieCarousel.value && nowPlaying.value.length > 0) {
                             const nextIndex = (activeIndex.value + 1) % nowPlaying.value.length;
                             movieCarousel.value.scrollTo({
                                 left: nextIndex * movieCarousel.value.offsetWidth,
@@ -353,15 +354,14 @@ main {
                     }, 5000);
                 };
 
-                // Método para desplazar a la barra de búsqueda
                 const scrollToSearchBar = () => {
                     const searchBar = document.querySelector('.search-bar');
-                    searchBar.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Desplazamiento suave
-                    searchBar.querySelector('input').focus(); // Enfocar el input de búsqueda
+                    searchBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    searchBar.querySelector('input').focus();
                 };
 
-
                 onMounted(() => {
+                    fetchNowPlayingMovies();
                     startAutoScroll();
                 });
 
