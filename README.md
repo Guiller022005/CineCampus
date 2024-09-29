@@ -28,6 +28,13 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 - `middlewares/`: Middlewares personalizados.
 - `services/`: Servicios adicionales.
 
+# Urls del Proyecto cineCampus
+
+- http://localhost:3000/cineCampus
+- http://localhost:3000/cineCampus/CreateAccount
+- http://localhost:3000/cineCampus/Log-in
+- http://localhost:3000/cineCampus/home
+
 ## Uso
 
 1. Asegúrate de que MongoDB esté ejecutándose en tu máquina.

@@ -42,9 +42,9 @@
         const app = Vue.createApp({
             data() {
                 return {
-                    username: 'Marcos',
-                    email: 'ma@gmail.com',
-                    password: '123456789',
+                    username: '',
+                    email: '',
+                    password: '',
                 };
             },
             methods: {
@@ -54,7 +54,14 @@
                     console.log('Email:', this.email);
                     console.log('Password:', this.password);
                     alert('Sign Up successful!');
+
+                    // Redirigir a la página de login después de un registro exitoso
+                    window.location.href = '/cineCampus/Log-in'; // Redirige a la página de login
                 }
+            },
+            login() {
+            // Redirigir a sign-Up.html
+            window.location.href = '/cineCampus/Log-in'; // Asegúrate de que la ruta sea correcta
             }
         });
 
