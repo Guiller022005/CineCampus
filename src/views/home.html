@@ -270,15 +270,15 @@ main {
                     <a href="#">See all</a>
                 </div>
                 <div class="movie-list">
-                    <div v-for="movie in comingSoon" :key="movie.id" class="coming-soon-item">
-                        <img :src="movie.poster" :alt="movie.title">
+                    <div v-for="movie in comingSoon" :key="movie._id" class="coming-soon-item">
+                        <img :src="movie.img" :alt="movie.titulo">
                         <div>
-                            <h3>{{ movie.title }}</h3>
-                            <p>{{ movie.releaseDate }}</p>
+                            <h3>{{ movie.titulo }}</h3>
+                            <p>{{ movie.releaseDate }}</p> <!-- Asegúrate de que el campo aquí sea correcto -->
                         </div>
                     </div>
                 </div>
-            </section>
+            </section>            
         </main>
 
         <footer class="app-footer">
@@ -311,10 +311,7 @@ main {
                 const movieCarousel = ref(null);
 
                 const nowPlaying = ref([]);
-                const comingSoon = ref([
-                    { id: 1, title: 'Oppenheimer', releaseDate: 'July 21, 2023', poster: '../storage/img/Oppenheimer.png' },
-                    { id: 2, title: 'Barbie', releaseDate: 'July 21, 2023', poster: '../storage/img/Barbie.png' }
-                ]);
+                const comingSoon = ref([]);
                 
                 let intervalId;
 
@@ -327,6 +324,21 @@ main {
                             titulo: movie.titulo,
                             genero: movie.genero,
                             img: movie.img
+                        }));
+                    } catch (error) {
+                        console.error('Error al obtener películas:', error);
+                    }
+                };
+                const fetchComingSoon = async () => {
+                    try {
+                        const response = await fetch('http://localhost:3000/api/movies/');
+                        const data = await response.json();
+                        comingSoon.value = data.filter(movie => movie.estado === 'proximamente').map(movie => ({
+                            _id: movie._id,
+                            titulo: movie.titulo,
+                            genero: movie.genero,
+                            img: movie.img,
+                            releaseDate: movie.fecha 
                         }));
                     } catch (error) {
                         console.error('Error al obtener películas:', error);
@@ -362,6 +374,7 @@ main {
 
                 onMounted(() => {
                     fetchNowPlayingMovies();
+                    fetchComingSoon();
                     startAutoScroll();
                 });
 

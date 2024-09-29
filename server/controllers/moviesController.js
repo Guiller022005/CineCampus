@@ -115,7 +115,7 @@ exports.listarPeliculas = async (req, res) => {
             "titulo": 1,
             "sinopsis": 1,
             "genero": 1,
-            "img": "$imagen",
+            "img": 1,
             "reparto": 1,
             "trailer": 1,
             "estado": 1,
