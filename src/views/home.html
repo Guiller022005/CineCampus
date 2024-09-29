@@ -101,24 +101,29 @@ main {
     font-size: 1rem;
 }
 
-.movie-carousel {
-    display: flex;
-    overflow-x: auto;
-    gap: 15px;
-    margin-bottom: 10px;
-  }
+    .movie-carousel {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 10px;
+    }
   .movie-info {
     margin-top: -15px;
   }
   
   .movie-poster {
-    flex-shrink: 0;
-    width: 120px;
-    
+    flex: 0 0 90%; 
+    width: 100px;
+    scroll-snap-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .movie-poster img {
-    width: 100%;
+    width: 70%;
     height: 180px;
     object-fit: cover;
     border-radius: 10px;
@@ -140,6 +145,7 @@ main {
     background-color: #fff;
     border-radius: 50%;
     transition: width 0.3s;
+    cursor: pointer;
 }
 
 .dot.active {
@@ -147,11 +153,6 @@ main {
     height: 7px;
     border-radius: 15%;
     background-color: red; /* Color rojo para el punto activo */
-}
-
-
-.dot:first-child {
-    background-color: red;
 }
 
 .coming-soon-item {
