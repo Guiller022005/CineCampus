@@ -10,9 +10,10 @@ const movimientos = require('./server/routes/movimiento'); // Importa rutas de m
 const usuarios = require('./server/routes/users'); // Importa rutas de usuarios
 require('./server/middlewares/auth');
 
-const app = express(); // Instancia
+const app = express();
 
-app.use("/login", log_InRouter);
+// Servir la carpeta src como estática
+app.use(express.static(path.join('/home/camper/CineCampus/src')));
 
 // Configuración de sesión
 app.use(session({
@@ -88,3 +89,4 @@ const PORT = process.env.PORT || 3000; // Configuración del puerto
  * @returns {void}
  */
 app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
+

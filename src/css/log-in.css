@@ -62,6 +62,16 @@ main{
     font-size: 16px;
 }
 
+.buttonLogin {
+    height: 56px;
+    width: 100%;
+    border-radius: 10px;
+    color: #fff; /* Cambiar el color del texto a blanco para que contraste */
+    background-color: #000; /* Cambiar el color de fondo a negro */
+    border: none; /* Opcional: quitar el borde predeterminado */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+}
+
 .login input[type="email"],
 .login input[type="password"] {
     border: 1px solid #747474;
