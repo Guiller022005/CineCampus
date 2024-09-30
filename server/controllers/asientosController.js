@@ -16,44 +16,18 @@ exports.getAllAsientos = async (req, res) => {
 };
 
 
-exports.obtenerAsientosDisponiblesPorFunciones = async (req, res) => {
+exports.obtenerFuncionesPorIdPelicula = async (req, res) => {
     try {
-        const { id_funcion } = req.params; // Obtener el id_funcion del parámetro de la URL
+        const idPelicula = req.params.idPelicula;
+        const asientos = await Funcion.find({ idPelicula: idPelicula });
 
-        // Buscar la función por id_funcion
-        const funcion = await Funcion.findById(id_funcion);
-        if (!funcion) {
-            return res.status(404).json({ message: 'Función no encontrada' });
+        if (asientos.length === 0) {
+        return res.status(404).json({ message: 'No se encontraron asientos para este ID de película.' });
         }
 
-        // Obtener la fecha y hora de la función
-        const { fecha, hora } = funcion;
-
-        // Realizar la agregación para obtener los asientos disponibles
-        const asientosDisponibles = await Funcion.aggregate([
-            { $match: { fecha: fecha, hora: hora } }, // Filtrar por fecha y hora
-            { $unwind: "$asientos" }, // Descomponer el array de asientos
-            { $match: { "asientos.estado": "disponible" } }, // Filtrar por asientos disponibles
-            {
-                $lookup: {
-                    from: "asiento", // Nombre de la colección de asientos
-                    localField: "asientos.asiento", // Campo local que conecta con la colección de asientos
-                    foreignField: "_id", // Campo en la colección de asientos que se usa para la coincidencia
-                    as: "asientoInfo" // Nombre del array de resultados
-                }
-            },
-            { $unwind: "$asientoInfo" }, // Descomponer el array de resultados del lookup
-            { $project: { "_id": 0 ,"codigo": "$asientoInfo.codigo", "_id": "$asientoInfo._id" } } // Proyectar solo el campo de código de asiento
-        ]);
-
-        // Enviar la respuesta
-        res.status(200).json({
-            message: 'Asientos disponibles obtenidos',
-            asientos: asientosDisponibles
-        });
+        res.status(200).json(asientos);
     } catch (error) {
-        console.error('Error al obtener los asientos disponibles:', error);
-        res.status(500).json({ message: 'Error al obtener los asientos disponibles' });
+        console.error(error);
+        res.status(500).json({ message: 'Error en el servidor.' });
     }
 };
-

@@ -272,8 +272,7 @@
                     if (!selectedCinema.value) {
                         alert("Please select a cinema to book.");
                     } else {
-                        alert(`Booking at cinema with ID: ${selectedCinema.value}`);
-                        // Aquí puedes agregar lógica para completar la reserva
+                        window.location.href = `http://localhost:3000/cineCampus/seats`;
                     }
                 };
 

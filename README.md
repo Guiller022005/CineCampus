@@ -14,8 +14,8 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 
 1. Clona este repositorio.
 2. Instala las dependencias con `npm install`.
-3. Instala las dependencias adicionales con `npm install express mongoose dotenv passport socket.io`.
-4. Inicia el servidor con `npm start`.
+3. Instala las dependencias adicionales con `npm install express mongoose mongodb bcrypt dotenv cookie-parser passport socket.io`.
+4. Inicia el servidor con `npm run dev`.
 
 ## Estructura del Proyecto
 
@@ -34,6 +34,8 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 - http://localhost:3000/cineCampus/CreateAccount
 - http://localhost:3000/cineCampus/Log-in
 - http://localhost:3000/cineCampus/home
+- http://localhost:3000/cineCampus/cinema?movieId=66d0ec62d6820d3b3181a8e1
+- http://localhost:3000/cineCampus/seats
 
 ## Uso
 
@@ -280,27 +282,122 @@ CineCampus es una aplicación web diseñada para gestionar la selección de pel�
 ### 2. Obtener asientos disponibles por función
 
 - **Endpoint:** `GET /api/asientos/asientos-disponibles-por-funcion/:id_funcion`
-- **URL:** `http://localhost:3000/api/asientos/asientos-disponibles-por-funcion/66d0e536d6820d3b3181a8cd`.
-- **Descripción:** Devuelve la lista de asientos disponibles para una función específica.
+- **URL:** `http://localhost:3000/api/asientos/asientosByfuncion/66d0ec62d6820d3b3181a8e1`.
+- **Descripción:** Devuelve la lista de asientos disponibles para una función específica por pelicula a ver.
 - **Parámetros:**
   - **id_funcion**: `string` - El ID de la función para la cual se desean consultar los asientos disponibles.
 - **Respuesta:**
   - **Código 200:** Retorna un array de objetos que representan los asientos disponibles para la función.
   - **Ejemplo de respuesta:**
     ```json
-    {
-    "message": "Asientos disponibles obtenidos",
+  {
+    "_id": "66d0e536d6820d3b3181a8cd",
+    "idPelicula": "66d0ec62d6820d3b3181a8e1",
+    "idSala": "66d06ed8a20753a6ddd1559f",
+    "fecha": "01/11/2026",
+    "hora": "6:00",
     "asientos": [
-      {
-        "_id": "66d0c660d6820d3b3181a87c",
-        "codigo": "A2"
-      },
-      {
-        "_id": "66d0c660d6820d3b3181a87d",
-        "codigo": "A3"
-      }
-      ]
+    {
+    "_id": "66fa293ddd0ca099df3acd82",
+    "asiento": "66d0c660d6820d3b3181a87b",
+    "estado": "ocupado"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd83",
+    "asiento": "66d0c660d6820d3b3181a87c",
+    "estado": "ocupado"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd84",
+    "asiento": "66d0c660d6820d3b3181a87d",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd85",
+    "asiento": "66d0c660d6820d3b3181a87e",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd86",
+    "asiento": "66d0c660d6820d3b3181a87f",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd87",
+    "asiento": "66d0c660d6820d3b3181a880",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd88",
+    "asiento": "66d0c660d6820d3b3181a881",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd89",
+    "asiento": "66d0c660d6820d3b3181a882",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd8a",
+    "asiento": "66d0c660d6820d3b3181a883",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd8b",
+    "asiento": "66d0c660d6820d3b3181a884",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd8c",
+    "asiento": "66d0c660d6820d3b3181a885",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd8d",
+    "asiento": "66d0c660d6820d3b3181a886",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd8e",
+    "asiento": "66d0c660d6820d3b3181a887",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd8f",
+    "asiento": "66d0c660d6820d3b3181a888",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd90",
+    "asiento": "66d0c660d6820d3b3181a889",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd91",
+    "asiento": "66d0c660d6820d3b3181a88a",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd92",
+    "asiento": "66d0c660d6820d3b3181a88b",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd93",
+    "asiento": "66d0c660d6820d3b3181a88c",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd94",
+    "asiento": "66d0c660d6820d3b3181a88d",
+    "estado": "disponible"
+    },
+    {
+    "_id": "66fa293ddd0ca099df3acd95",
+    "asiento": "66d0c660d6820d3b3181a88e",
+    "estado": "disponible"
     }
+  ]}
     ```
   - **Código 404:** Retorna un mensaje de error si la función no es encontrada.
   - **Código 500:** Retorna un mensaje de error si ocurre un problema en el servidor.

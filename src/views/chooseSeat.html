@@ -298,15 +298,14 @@
                     selectedTime.value = time
                 }
 
-                function goBack() {
-                    console.log('Going back')
-                    // Implement navigation logic here
-                }
-
                 function buyTicket() {
                     console.log('Buying ticket')
                     // Implement ticket purchase logic here
                 }
+
+                const goBack = () => {
+                    window.history.back();
+                };
 
                 return {
                     seatLayout,
