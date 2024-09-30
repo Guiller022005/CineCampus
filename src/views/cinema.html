@@ -272,9 +272,10 @@
                     if (!selectedCinema.value) {
                         alert("Please select a cinema to book.");
                     } else {
-                        window.location.href = `http://localhost:3000/cineCampus/seats`;
+                        window.location.href = `http://localhost:3000/cineCampus/seats?movieId=${movieId}`; // Agrega el movieId a la URL
                     }
                 };
+
 
                 const watchTrailer = () => {
                     if (movie.value.trailer) {

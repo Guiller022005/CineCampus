@@ -29,10 +29,16 @@ const funcionSchema = new Schema({
         type: String, // Considera usar Date para un mejor manejo
         required: true
     },
-    hora: {
-        type: String, // Igual aquí, podrías usar Date con solo la hora
-        required: true
-    },
+    hora: [{
+        time: {
+            type: String, // Mantener como String, o considerar un formato más adecuado
+            required: true
+        },
+        price: {
+            type: Number, // Cambiar a Number para manejar precios
+            required: true
+        }
+    }],
     asientos: [asientoSchema]
 });
 

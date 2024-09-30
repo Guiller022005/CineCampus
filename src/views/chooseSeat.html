@@ -210,10 +210,10 @@
                 :class="['date-button', { active: date.day === selectedDate }]"
                 @click="selectDate(date.day)"
             >
-                <span class="day">{{ date.dayName }}</span>
-                <span class="date">{{ date.day }}</span>
+                <p class="day">{{ date.dayName }}</p> <!-- Cambiado data a date -->
+                <p class="day">{{ date.day }}</p>
             </button>
-        </div>
+        </div>        
 
         <div class="time-selection">
             <button 
@@ -237,8 +237,8 @@
     </div>
 
     <script>
-        const { createApp, ref, computed } = Vue
-
+        const { createApp, ref, computed, onMounted } = Vue;
+    
         createApp({
             setup() {
                 const seatLayout = ref([
@@ -248,65 +248,97 @@
                     { id: 'D', seats: Array(9).fill().map((_, i) => ({ number: i + 1, status: 'reserved' })) },
                     { id: 'E', seats: Array(9).fill().map((_, i) => ({ number: i + 1, status: 'reserved' })) },
                     { id: 'F', seats: Array(9).fill().map((_, i) => ({ number: i + 1, status: 'reserved' })) },
-                ])
+                ]);
+    
+                const dates = ref([]);
+                const movieId = new URLSearchParams(window.location.search).get('movieId'); // Obtiene el movieId de la URL
+    
+                const fetchFuncionDetails = async (id) => {
+                    if (!id) {
+                        console.error('Movie ID is undefined');
+                        return;
+                    }
+                    try {
+                        const response = await fetch(`http://localhost:3000/api/asientos/asientosByfuncion/${id}`);
+                        if (!response.ok) throw new Error('Failed to fetch movie details');
+                        
+                        const data = await response.json();
 
-                const dates = ref([
-                    { day: '17', dayName: 'Fri' },
-                    { day: '18', dayName: 'Sat' },
-                    { day: '19', dayName: 'Sun' },
-                    { day: '20', dayName: 'Mon' },
-                    { day: '21', dayName: 'Tue' },
-                    { day: '22', dayName: 'Wed' },
-                    { day: '23', dayName: 'Thurs' },
-                ])
+                        // Asegúrate de que data tenga al menos un elemento
+                        if (data.length > 0) {
+                            const functionDetails = data[0];
+                            console.log('Detalles de la función:', functionDetails);
+                            // Cambia estos nombres a los que realmente tienes
+                            if (functionDetails.diaName && functionDetails.dia) {
+                                dates.value = [{ 
+                                    dayName: functionDetails.diaName,
+                                    day: functionDetails.dia,
+                                }];
+                            } else {
+                                console.error('Propiedades esperadas no encontradas en los detalles de la función:', functionDetails);
+                            }
+                        }
 
+                    } catch (error) {
+                        console.error('Error fetching movie details:', error);
+                    }
+                };
+    
                 const times = ref([
                     { time: '13:00', price: '5.25' },
                     { time: '15:45', price: '5.99' },
                     { time: '18:50', price: '4.50' },
                     { time: '20:30', price: '6.50' },
-                ])
-
-                const selectedDate = ref('17')
-                const selectedTime = ref('13:00')
-
+                ]);
+    
+                const selectedDate = ref('17');
+                const selectedTime = ref('13:00');
+    
                 const totalPrice = computed(() => {
                     const selectedSeats = seatLayout.value.flatMap(row => 
                         row.seats.filter(seat => seat.status === 'selected')
-                    )
-                    const seatPrice = times.value.find(t => t.time === selectedTime.value)?.price || 0
-                    return selectedSeats.length * parseFloat(seatPrice)
-                })
-
+                    );
+                    const seatPrice = times.value.find(t => t.time === selectedTime.value)?.price || 0;
+                    return selectedSeats.length * parseFloat(seatPrice);
+                });
+    
                 function selectSeat(rowId, seatNumber) {
-                    const row = seatLayout.value.find(r => r.id === rowId)
+                    const row = seatLayout.value.find(r => r.id === rowId);
                     if (row) {
-                        const seat = row.seats.find(s => s.number === seatNumber)
+                        const seat = row.seats.find(s => s.number === seatNumber);
                         if (seat && seat.status === 'available') {
-                            seat.status = 'selected'
+                            seat.status = 'selected';
                         } else if (seat && seat.status === 'selected') {
-                            seat.status = 'available'
+                            seat.status = 'available';
                         }
                     }
                 }
-
+    
                 function selectDate(day) {
-                    selectedDate.value = day
+                    selectedDate.value = day;
                 }
-
+    
                 function selectTime(time) {
-                    selectedTime.value = time
+                    selectedTime.value = time;
                 }
-
+    
                 function buyTicket() {
-                    console.log('Buying ticket')
+                    console.log('Buying ticket');
                     // Implement ticket purchase logic here
                 }
-
+    
                 const goBack = () => {
                     window.history.back();
                 };
-
+    
+                onMounted(() => {
+                    if (movieId) {
+                        fetchFuncionDetails(movieId); // Usa el movieId para obtener detalles
+                    } else {
+                        console.error('No movie ID provided in URL');
+                    }
+                });
+    
                 return {
                     seatLayout,
                     dates,
@@ -318,10 +350,11 @@
                     selectDate,
                     selectTime,
                     goBack,
-                    buyTicket
-                }
+                    buyTicket,
+                };
             }
-        }).mount('#app')
+        }).mount('#app');
     </script>
+    
 </body>
 </html>
