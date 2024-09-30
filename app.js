@@ -15,7 +15,7 @@ require('./server/middlewares/authCookies');
 const app = express();
 
 // Servir la carpeta src como estática
-app.use(express.static(path.join('/home/camper/CineCampus/src')));
+app.use(express.static(path.join(__dirname, 'src')));
 
 // Configuración de sesión
 app.use(session({
@@ -29,49 +29,37 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 connectDB();
-
 app.use(express.json());
 
 // Ruta para la página principal
 app.get('/cineCampus', (req, res) => {
-    res.sendFile(path.join('/home/camper/CineCampus/src', 'index.html'));
+    res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
 
-// Ruta para la página de crear cuenta
+// Rutas para las páginas de la aplicación
 app.get('/cineCampus/CreateAccount', (req, res) => {
-    res.sendFile(path.join('/home/camper/CineCampus/src/views', 'sign-Up.html')); // Actualiza con la ruta correcta
+    res.sendFile(path.join(__dirname, 'src', 'views', 'sign-Up.html'));
 });
-
-// Ruta para la página de crear cuenta
 app.get('/cineCampus/Log-in', (req, res) => {
-    res.sendFile(path.join('/home/camper/CineCampus/src/views', 'log-in.html')); // Actualiza con la ruta correcta
+    res.sendFile(path.join(__dirname, 'src', 'views', 'log-in.html'));
 });
-
-// Ruta para la página de inicio
 app.get('/cineCampus/home', (req, res) => {
-    res.sendFile(path.join('/home/camper/CineCampus/src/views', 'home.html')); // Ruta para la página de inicio
+    res.sendFile(path.join(__dirname, 'src', 'views', 'home.html'));
 });
-
-// Ruta para la página de cinema
 app.get('/cineCampus/cinema', (req, res) => {
-    res.sendFile(path.join('/home/camper/CineCampus/src/views', 'cinema.html')); // Ruta para la página de cinema
+    res.sendFile(path.join(__dirname, 'src', 'views', 'cinema.html'));
 });
-
-// Ruta para la página de ChooseSeat
 app.get('/cineCampus/seats', (req, res) => {
-    res.sendFile(path.join('/home/camper/CineCampus/src/views', 'chooseSeat.html')); // Ruta para la página de chooseSeat
+    res.sendFile(path.join(__dirname, 'src', 'views', 'chooseSeat.html'));
 });
-
-// Ruta para la página de order
 app.get('/cineCampus/order', (req, res) => {
-    res.sendFile(path.join('/home/camper/CineCampus/src/views', 'order.html')); // Ruta para la página de order
+    res.sendFile(path.join(__dirname, 'src', 'views', 'order.html'));
 });
-
-// Ruta para la página de ticket
 app.get('/cineCampus/ticket', (req, res) => {
-    res.sendFile(path.join('/home/camper/CineCampus/src/views', 'ticket.html')); // Ruta para la página de ticket
+    res.sendFile(path.join(__dirname, 'src', 'views', 'ticket.html'));
 });
 
+// Rutas para la API
 app.use("/login", log_InRouter);
 app.use('/api/movies', movies);
 app.use('/api/asientos', asientos);
@@ -80,5 +68,4 @@ app.use('/api/users/', usuarios);
 app.use('/api/boletas', boletas);
 
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
