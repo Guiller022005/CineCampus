@@ -111,7 +111,7 @@ exports.listarPeliculas = async (req, res) => {
         },
         {
           "$project": {
-            "_id": 0,
+            "_id": 1,
             "titulo": 1,
             "sinopsis": 1,
             "genero": 1,

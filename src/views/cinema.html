@@ -6,6 +6,7 @@
     <title>Cinema Selection</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     
+    
     <style>
         body {
             font-family: 'SF Pro Text', Arial, sans-serif;
@@ -41,6 +42,7 @@
         .movie-poster {
             width: 100%;
             border-radius: 12px;
+            height: 204px;
             height: 204px;
             margin-bottom: 10px;
         }
@@ -104,6 +106,8 @@
             display: flex;
             flex-direction: row;
             text-align: center;
+            flex-direction: row;
+            text-align: center;
         }
         .actor-details {
             display: flex;
@@ -138,6 +142,7 @@
             transition: border 0.3s;
         }
         .selected {
+            border: 2px solid red;
             border: 2px solid red;
         }
         .cinema-info h4 {
@@ -174,6 +179,7 @@
             <button class="back-button" @click="goBack">&lt;</button>
             <h1>Cinema Selection</h1>
             <div class="more-options"><img src="../storage/img/menu.png" alt="More Options"></div>
+            <div class="more-options"><img src="../storage/img/menu.png" alt="More Options"></div>
         </header>
 
         <div class="movie-details">
@@ -201,12 +207,14 @@
             <div class="cast-list">
                 <div v-for="actor in movie.cast" :key="actor.name" class="cast-member">
                     <img :src="actor.img" :alt="actor.name" class="actor-image">
+                    <img :src="actor.img" :alt="actor.name" class="actor-image">
                     <div class="actor-details">
                         <p class="actor-name">{{ actor.name }}</p>
                         <p class="character-name">{{ actor.character }}</p>
                     </div>
                 </div>                
             </div>
+        </section>        
         </section>        
 
         <section class="cinema">
@@ -233,7 +241,46 @@
 
     <script>
         const { createApp, ref, onMounted } = Vue;
+        const { createApp, ref, onMounted } = Vue;
 
+        createApp({
+            setup() {
+                const movie = ref({}); // Inicia como un objeto vacío
+                const movieId = new URLSearchParams(window.location.search).get('movieId'); // Extrae el movieId de la URL
+
+                const fetchMovieDetails = async (id) => {
+                    if (!id) {
+                        console.error('Movie ID is undefined');
+                        return;
+                    }
+                    try {
+                        const response = await fetch(`http://localhost:3000/api/movies/${id}`);
+                        if (!response.ok) throw new Error('Failed to fetch movie details');
+                        const data = await response.json();
+                        movie.value = {
+                            title: data.titulo,
+                            genres: data.genero,
+                            description: data.sinopsis,
+                            poster: data.img,
+                            cast: data.reparto.map(actor => ({
+                                name: actor.nombre,
+                                character: actor.personaje,
+                                img: actor.img,
+                            })),
+                            trailer: data.trailer
+                        };
+                    } catch (error) {
+                        console.error('Error fetching movie details:', error);
+                    }
+                };
+
+                onMounted(() => {
+                    if (movieId) {
+                        fetchMovieDetails(movieId);
+                    } else {
+                        console.error('No movie ID provided in URL');
+                    }
+                });
         createApp({
             setup() {
                 const movie = ref({}); // Inicia como un objeto vacío
@@ -316,6 +363,18 @@
                 };
             }
         }).mount('#app');
+                return {
+                    movie,
+                    cinemas,
+                    selectedCinema,
+                    selectCinema,
+                    bookNow,
+                    watchTrailer,
+                    goBack,
+                };
+            }
+        }).mount('#app');
     </script>
 </body>
 </html>
+
