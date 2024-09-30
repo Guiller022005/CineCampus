@@ -75,4 +75,21 @@ exports.listarMovimientos = async (req, res) => {
       error: error.message
     });
   }
+  try {
+    // Obtener todos los movimientos de la base de datos
+    const movimientos = await Movimiento.find();
+    
+    // Enviar una respuesta exitosa con la lista de movimientos
+    res.status(200).json({
+      mensaje: 'Movimientos obtenidos con éxito',
+      movimientos
+    });
+  } catch (error) {
+    // Manejo de errores
+    console.error('Error al recuperar los movimientos:', error);
+    res.status(500).json({
+      mensaje: 'Error al recuperar los movimientos',
+      error: error.message
+    });
+  }
 };

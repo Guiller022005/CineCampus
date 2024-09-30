@@ -1,22 +1,19 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-// Definimos el esquema del usuario
-const usuarioSchema = new mongoose.Schema({
-  user: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  pwd: {
-    type: String,
-    required: true
-  },
-  rol: {
-    type: String,
-    required: true,
-    enum: ['VIP', 'estandar', 'admin']
-  }
+// Define los roles permitidos
+const rolesPermitidos = ['VIP', 'estandar', 'adminRole'];
+
+const userSchema = new Schema({
+    user: { type: String, required: true },
+    pwd: { type: String, required: true },
+    rol: { 
+        type: String, 
+        enum: rolesPermitidos, // Lista de roles permitidos
+        required: true 
+    }
 });
 
-// Creamos el modelo basado en el esquema
-module.exports = mongoose.model('User', usuarioSchema, 'user');
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

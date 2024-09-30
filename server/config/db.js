@@ -11,7 +11,7 @@ let mongoURI; // Declara la variable mongoURI para la URI de conexión
 if (process.env.MONGO_USER === "root") {
     mongoURI = `${process.env.MONGO_PROTOCOLO}${process.env.MONGO_USER}:${process.env.MONGO_PWD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`;
 } else {
-    mongoURI = `${process.env.MONGO_PROTOCOLO}${process.env.MONGO_USER}:${process.env.MONGO_PWD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/ligaBetPlay`;
+    mongoURI = `${process.env.MONGO_PROTOCOLO}${process.env.MONGO_USER}:${process.env.MONGO_PWD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/cineCampus`;
     console.log(process.env.MONGO_USER);
 }
 

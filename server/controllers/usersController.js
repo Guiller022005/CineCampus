@@ -66,7 +66,7 @@ exports.crearUsuario = async (req, res) => {
     try {
         // Conectarse a la base de datos admin
         await adminClient.connect();
-        const adminDb = adminClient.db('cineCampus');
+        const adminDb = adminClient.db('admin');
 
         // Define roles y permisos basados en el rol proporcionado
         let userRoles;
@@ -78,7 +78,7 @@ exports.crearUsuario = async (req, res) => {
             userRoles = [
                 { role: "estandar", db: "cineCampus" }
             ];
-        } else if (role === 'admin') {
+        } else if (role === 'adminRole') {
             userRoles = [
                 { role: "readWrite", db: "cineCampus" },
                 { role: "dbAdmin", db: "cineCampus" },
@@ -177,4 +177,3 @@ exports.actualizarUsuario = async (req, res) => {
         await adminClient.close(); // Asegúrate de cerrar la conexión
     }
 };
-

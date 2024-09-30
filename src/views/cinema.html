@@ -6,7 +6,6 @@
     <title>Cinema Selection</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     
-    
     <style>
         body {
             font-family: 'SF Pro Text', Arial, sans-serif;
@@ -43,7 +42,6 @@
             width: 100%;
             border-radius: 12px;
             height: 204px;
-            height: 204px;
             margin-bottom: 10px;
         }
         .movie-header {
@@ -52,7 +50,6 @@
             align-items: center;
             margin-bottom: 1px;
         }
-
         h2 {
             font-size: 0.9rem;
             font-weight: 700;
@@ -61,7 +58,6 @@
         .movie-genres {
             display: flex;
             gap: 8px;
-            margin-bottom: 5px;
             margin-bottom: 5px;
         }
         .movie-genres span {
@@ -72,14 +68,11 @@
             font-size: 12px;
             line-height: 1.4;
             margin-bottom: -18px;
-            margin-bottom: -18px;
         }
         .watch-trailer {
             background: #FE0000;
             border: 1px solid #ffffff;
             color: #ffffff;
-            padding: 5px 16px;
-            border-radius: 10px;
             padding: 5px 16px;
             border-radius: 10px;
             display: flex;
@@ -89,12 +82,10 @@
         }
         .cast, .cinema {
             margin-bottom: -15px;
-            margin-bottom: -15px;
         }
         h3 {
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 2px;
             margin-bottom: 2px;
         }
         .cast-list {
@@ -106,8 +97,6 @@
             display: flex;
             flex-direction: row;
             text-align: center;
-            flex-direction: row;
-            text-align: center;
         }
         .actor-details {
             display: flex;
@@ -116,11 +105,9 @@
         }
         .actor-name {
             font-size: 10px;
-            font-size: 10px;
             font-weight: 600;
         }
         .character-name {
-            font-size: 10px;
             font-size: 10px;
             color: #888888;
         }
@@ -136,13 +123,11 @@
             background-color: #1C1C1E;
             border-radius: 12px;
             height: 6vh;
-            height: 6vh;
             padding: 16px;
             margin-bottom: 12px;
             transition: border 0.3s;
         }
         .selected {
-            border: 2px solid red;
             border: 2px solid red;
         }
         .cinema-info h4 {
@@ -161,7 +146,6 @@
         .book-now {
             width: 100%;
             margin-top: 10px;
-            margin-top: 10px;
             background-color: #FF3B30;
             color: #ffffff;
             border: none;
@@ -179,17 +163,10 @@
             <button class="back-button" @click="goBack">&lt;</button>
             <h1>Cinema Selection</h1>
             <div class="more-options"><img src="../storage/img/menu.png" alt="More Options"></div>
-            <div class="more-options"><img src="../storage/img/menu.png" alt="More Options"></div>
         </header>
 
         <div class="movie-details">
             <img :src="movie.poster" :alt="movie.title" class="movie-poster">
-            <div class="movie-header">
-                <h2>{{ movie.title }}</h2>
-                <button class="watch-trailer" @click="watchTrailer">
-                    ▶ Watch Trailer
-                </button>
-            </div>
             <div class="movie-header">
                 <h2>{{ movie.title }}</h2>
                 <button class="watch-trailer" @click="watchTrailer">
@@ -207,14 +184,12 @@
             <div class="cast-list">
                 <div v-for="actor in movie.cast" :key="actor.name" class="cast-member">
                     <img :src="actor.img" :alt="actor.name" class="actor-image">
-                    <img :src="actor.img" :alt="actor.name" class="actor-image">
                     <div class="actor-details">
                         <p class="actor-name">{{ actor.name }}</p>
                         <p class="character-name">{{ actor.character }}</p>
                     </div>
                 </div>                
             </div>
-        </section>        
         </section>        
 
         <section class="cinema">
@@ -241,46 +216,7 @@
 
     <script>
         const { createApp, ref, onMounted } = Vue;
-        const { createApp, ref, onMounted } = Vue;
 
-        createApp({
-            setup() {
-                const movie = ref({}); // Inicia como un objeto vacío
-                const movieId = new URLSearchParams(window.location.search).get('movieId'); // Extrae el movieId de la URL
-
-                const fetchMovieDetails = async (id) => {
-                    if (!id) {
-                        console.error('Movie ID is undefined');
-                        return;
-                    }
-                    try {
-                        const response = await fetch(`http://localhost:3000/api/movies/${id}`);
-                        if (!response.ok) throw new Error('Failed to fetch movie details');
-                        const data = await response.json();
-                        movie.value = {
-                            title: data.titulo,
-                            genres: data.genero,
-                            description: data.sinopsis,
-                            poster: data.img,
-                            cast: data.reparto.map(actor => ({
-                                name: actor.nombre,
-                                character: actor.personaje,
-                                img: actor.img,
-                            })),
-                            trailer: data.trailer
-                        };
-                    } catch (error) {
-                        console.error('Error fetching movie details:', error);
-                    }
-                };
-
-                onMounted(() => {
-                    if (movieId) {
-                        fetchMovieDetails(movieId);
-                    } else {
-                        console.error('No movie ID provided in URL');
-                    }
-                });
         createApp({
             setup() {
                 const movie = ref({}); // Inicia como un objeto vacío
@@ -363,18 +299,6 @@
                 };
             }
         }).mount('#app');
-                return {
-                    movie,
-                    cinemas,
-                    selectedCinema,
-                    selectCinema,
-                    bookNow,
-                    watchTrailer,
-                    goBack,
-                };
-            }
-        }).mount('#app');
     </script>
 </body>
 </html>
-

@@ -1,14 +1,16 @@
-require('dotenv').config(); // Carga las variables de entorno desde un archivo .env
-const express = require('express'); // Framework para manejar el servidor
-const session = require('express-session'); // Middleware para manejar sesiones
-const passport = require('passport'); // Middleware para manejar autenticación
-const connectDB = require('./server/config/db'); // Importa la función de conexión a la base de datos MongoDB
-const connectDB = require('./server/config/db'); // Importa la función de conexión a la base de datos MongoDB
-const movies = require('./server/routes/movies'); // Importa rutas de películas
-const asientos = require('./server/routes/asientos'); // Importa rutas de asientos
-const movimientos = require('./server/routes/movimiento'); // Importa rutas de movimientos
-const usuarios = require('./server/routes/users'); // Importa rutas de usuarios
-require('./server/middlewares/auth');
+const express = require('express');
+const path = require('path');
+require('dotenv').config();
+const session = require('express-session');
+const passport = require('passport');
+const connectDB = require('./server/config/db');
+const movies = require('./server/routes/movies');
+const asientos = require('./server/routes/asientos');
+const movimientos = require('./server/routes/movimiento');
+const usuarios = require('./server/routes/users');
+const boletas = require('./server/routes/tickets');
+const log_InRouter = require('./server/routes/log-InRouter');
+require('./server/middlewares/authCookies');
 
 const app = express();
 
@@ -77,16 +79,6 @@ app.use('/api/movimientos', movimientos);
 app.use('/api/users/', usuarios);
 app.use('/api/boletas', boletas);
 
-const PORT = process.env.PORT || 3000; // Configuración del puerto
+const PORT = process.env.PORT || 3000;
 
-/**
- * @function app.listen
- * @description Inicia el servidor Express y hace que escuche en el puerto 3000 especificado.
- * 
- * @param {number} PORT - El puerto en el que el servidor escuchará las solicitudes '3000'.
- * @param {Function} - Una función de callback que se ejecuta cuando el servidor está en funcionamiento.
- * 
- * @returns {void}
- */
 app.listen(PORT, () => console.log(`Servidor corriendo en el puerto ${PORT}`));
-
