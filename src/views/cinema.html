@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cinema Selection</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
     <style>
         body {
             font-family: 'SF Pro Text', Arial, sans-serif;
@@ -40,10 +41,8 @@
         .movie-poster {
             width: 100%;
             border-radius: 12px;
-            margin-bottom: 10px;
-        }
-        .movie-poster {
             height: 204px;
+            margin-bottom: 10px;
         }
         .movie-header {
             display: flex;
@@ -51,13 +50,6 @@
             align-items: center;
             margin-bottom: 1px;
         }
-
-        h2 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin: 0;
-        }
-
         h2 {
             font-size: 0.9rem;
             font-weight: 700;
@@ -103,40 +95,26 @@
         }
         .cast-member {
             display: flex;
-            flex-direction: row; /* Mantén la imagen y el texto en una fila */
-            text-align: center; /* Alinea verticalmente al centro */
+            flex-direction: row;
+            text-align: center;
         }
-
         .actor-details {
             display: flex;
-            flex-direction: column; /* Apila el nombre y el personaje en columna */
-            margin-left: 2px; /* Espacio entre la imagen y los textos */
+            flex-direction: column;
+            margin-left: 2px;
         }
-
         .actor-name {
-            font-size: 8px;
+            font-size: 10px;
             font-weight: 600;
-            width: 102px;
-            height: 0px;
         }
-
         .character-name {
             font-size: 10px;
             color: #888888;
         }
-
         .cast-member img {
             width: 30px;
             height: 30px;
             border-radius: 100%;
-        }
-        .actor-name {
-            font-size: 10px;
-            font-weight: 600;
-        }
-        .character-name {
-            font-size: 10px;
-            color: #888888;
         }
         .cinema-item {
             display: flex;
@@ -149,9 +127,8 @@
             margin-bottom: 12px;
             transition: border 0.3s;
         }
-
         .selected {
-            border: 2px solid red; /* Borde rojo */
+            border: 2px solid red;
         }
         .cinema-info h4 {
             font-size: 16px;
@@ -185,7 +162,7 @@
         <header>
             <button class="back-button" @click="goBack">&lt;</button>
             <h1>Cinema Selection</h1>
-            <div class="more-options"><img src="../storage/img/menu.png"></div>
+            <div class="more-options"><img src="../storage/img/menu.png" alt="More Options"></div>
         </header>
 
         <div class="movie-details">
@@ -206,14 +183,14 @@
             <h3>Cast</h3>
             <div class="cast-list">
                 <div v-for="actor in movie.cast" :key="actor.name" class="cast-member">
-                    <img :src="actor.photo" :alt="actor.name">
+                    <img :src="actor.img" :alt="actor.name" class="actor-image">
                     <div class="actor-details">
                         <p class="actor-name">{{ actor.name }}</p>
                         <p class="character-name">{{ actor.character }}</p>
                     </div>
                 </div>                
             </div>
-        </section>
+        </section>        
 
         <section class="cinema">
             <h3>Cinema</h3>
@@ -238,60 +215,91 @@
     </div>
 
     <script>
-        const { createApp, ref } = Vue
+        const { createApp, ref, onMounted } = Vue;
 
-createApp({
-    setup() {
-        const movie = ref({
-            title: "Puss in boots the last wish",
-            genres: ["Action", "Adventure"],
-            description: "Jake Sully and Ney'tiri have formed a family and are doing everything to stay together. However, they must leave their home and explore the regions of Pandora. When an ancient threat resurfaces, Jake must fight a difficult war against the humans.",
-            poster: "https://m.media-amazon.com/images/M/MV5BNjMyMDBjMGUtNDUzZi00N2MwLTg1MjItZTk2MDE1OTZmNTYxXkEyXkFqcGdeQXVyMTQ5NjA0NDM0._V1_SX300.jpg",
-            cast: [
-                { name: "Antonio Banderas", character: "Puss in Boots", photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Antonio_Banderas-66031_%28cropped%29.jpg/800px-Antonio_Banderas-66031_%28cropped%29.jpg" },
-                { name: "Salma Hayek", character: "Kitty Softpaws", photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Salma_Hayek-9894.jpg/220px-Salma_Hayek-9894.jpg" },
-                { name: "Harvey Guillén", character: "Perro", photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Harvey_Guill%C3%A9n_Photo_Op_GalaxyCon_Richmond_2022.jpg/800px-Harvey_Guill%C3%A9n_Photo_Op_GalaxyCon_Richmond_2022.jpg" },
-            ]
-        })
+        createApp({
+            setup() {
+                const movie = ref({}); // Inicia como un objeto vacío
+                const movieId = new URLSearchParams(window.location.search).get('movieId'); // Extrae el movieId de la URL
 
-        const cinemas = ref([
-            { id: 1, name: "Atrium Cinemas", location: "Staff Lines, Saddar, Karachi", logo: "https://yt3.googleusercontent.com/eJG_qiZmgwaP8iEXJqiFZxVKGWJBAwPOpf3JiF2e2-ruu668j-RKXCXwSi7ZdRRhBrPyWW_E=s900-c-k-c0x00ffffff-no-rj" },
-            { id: 2, name: "Neuplex", location: "Khayaban - e Shaheen, DHA Phase 8", logo: "https://seeklogo.com/images/C/cine-colombia-logo-1C443A07F5-seeklogo.com.png" },
-        ])
+                const fetchMovieDetails = async (id) => {
+                    if (!id) {
+                        console.error('Movie ID is undefined');
+                        return;
+                    }
+                    try {
+                        const response = await fetch(`http://localhost:3000/api/movies/${id}`);
+                        if (!response.ok) throw new Error('Failed to fetch movie details');
+                        const data = await response.json();
+                        movie.value = {
+                            title: data.titulo,
+                            genres: data.genero,
+                            description: data.sinopsis,
+                            poster: data.img,
+                            cast: data.reparto.map(actor => ({
+                                name: actor.nombre,
+                                character: actor.personaje,
+                                img: actor.img,
+                            })),
+                            trailer: data.trailer
+                        };
+                    } catch (error) {
+                        console.error('Error fetching movie details:', error);
+                    }
+                };
 
-        const selectedCinema = ref(null); // Para almacenar el cine seleccionado
+                onMounted(() => {
+                    if (movieId) {
+                        fetchMovieDetails(movieId);
+                    } else {
+                        console.error('No movie ID provided in URL');
+                    }
+                });
 
-        function selectCinema(id) {
-            selectedCinema.value = id; // Actualiza el cine seleccionado
-        }
+                const cinemas = ref([
+                    { id: 1, name: "CineCampuslands", location: "Staff Lines, Saddar, Karachi", logo: '../storage/img/logoCampus.png'},
+                    { id: 2, name: "CineColombia", location: "Gulshan, Karachi", logo: "https://seeklogo.com/images/C/cine-colombia-logo-1C443A07F5-seeklogo.com.png" },
+                    // Agrega más cines según sea necesario
+                ]);
+                
+                const selectedCinema = ref(null);
 
-        function goBack() {
-            console.log("Going back")
-            // Implement actual navigation logic here
-        }
+                const selectCinema = (id) => {
+                    selectedCinema.value = id;
+                };
 
-        function watchTrailer() {
-            console.log("Watching trailer")
-            // Implement trailer viewing logic here
-        }
+                const bookNow = () => {
+                    if (!selectedCinema.value) {
+                        alert("Please select a cinema to book.");
+                    } else {
+                        alert(`Booking at cinema with ID: ${selectedCinema.value}`);
+                        // Aquí puedes agregar lógica para completar la reserva
+                    }
+                };
 
-        function bookNow() {
-            console.log("Booking now")
-            // Implement booking logic here
-        }
+                const watchTrailer = () => {
+                    if (movie.value.trailer) {
+                        window.open(movie.value.trailer, '_blank');
+                    } else {
+                        alert("Trailer not available.");
+                    }
+                };
 
-        return {
-            movie,
-            cinemas,
-            selectedCinema,
-            selectCinema,
-            goBack,
-            watchTrailer,
-            bookNow
-        }
-    }
-}).mount('#app')
+                const goBack = () => {
+                    window.history.back();
+                };
 
+                return {
+                    movie,
+                    cinemas,
+                    selectedCinema,
+                    selectCinema,
+                    bookNow,
+                    watchTrailer,
+                    goBack,
+                };
+            }
+        }).mount('#app');
     </script>
 </body>
 </html>

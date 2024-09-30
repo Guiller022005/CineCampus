@@ -52,6 +52,11 @@ app.get('/cineCampus/home', (req, res) => {
     res.sendFile(path.join('/home/camper/CineCampus/src/views', 'home.html')); // Ruta para la página de inicio
 });
 
+// Ruta para la página de cinema
+app.get('/cineCampus/cinema', (req, res) => {
+    res.sendFile(path.join('/home/camper/CineCampus/src/views', 'cinema.html')); // Ruta para la página de cinema
+});
+
 app.use("/login", log_InRouter);
 app.use('/api/movies', movies);
 app.use('/api/asientos', asientos);
