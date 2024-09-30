@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Seat</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            font-family: 'SF Pro Text', Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .choose-seat {
+            max-width: 414px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .back-button, .more-options {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        h1 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .screen {
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .screen span {
+            font-size: 12px;
+            color: #888888;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .seating-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .seat-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .row-label {
+            width: 20px;
+            text-align: center;
+        }
+
+        .shift-right {
+            margin-left: 35px; /* Ajusta el valor para que corresponda al tamaño del asiento */
+        }
+
+        /* Mover la fila A más a la derecha */
+        .seat-row:nth-of-type(1) {
+            margin-left: 70px; /* Ajusta este valor para mover más la fila A */
+        }
+
+        /* Mover la fila B ligeramente a la derecha */
+        .seat-row:nth-of-type(2) {
+            margin-left: 35px; /* Ajusta este valor según sea necesario para la fila B */
+        }
+
+        .seat {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .seat.available {
+            background-color: #333333;
+        }
+        .seat.reserved {
+            background-color: #ffffff;
+        }
+        .seat.selected {
+            background-color: #FF3B30;
+            color: #ffffff;
+        }
+        .legend {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .seat-sample {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+        }
+        .date-selection, .time-selection {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+        .date-button, .time-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            background-color: #1C1C1E;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .day span {
+            color: #888888;
+        }
+
+        .date-button.active, .time-button.active {
+            background-color: #FF3B30;
+        }
+        .booking-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .total-price {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .buy-ticket {
+            background-color: #FF3B30;
+            color: #ffffff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="choose-seat">
+        <header>
+            <button class="back-button" @click="goBack">&lt;</button>
+            <h1>Choose Seat</h1>
+            <div class="more-options"><img src="../storage/img/menu.png"></div>
+        </header>
+
+        <div class="screen">
+            <img src="../storage/img/screm.png"></img>
+        </div>
+
+        <div class="seating-layout">
+            <div v-for="row in seatLayout" :key="row.id" class="seat-row" :class="{ 'shift-right': row.id === 'A' || row.id === 'B' }">
+                <span class="row-label">{{ row.id }}</span>
+                <button 
+                    v-for="seat in row.seats" 
+                    :key="`${row.id}${seat.number}`"
+                    :class="['seat', seat.status]"
+                    @click="selectSeat(row.id, seat.number)"
+                    :disabled="seat.status === 'reserved'"
+                >
+                    {{ seat.status === 'selected' ? seat.number : '' }}
+                </button>
+            </div>            
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="seat-sample available"></div>
+                <img src="../storage/img/Ellipse 27 (2).png">
+                <span>Available</span>
+            </div>
+            <div class="legend-item">
+                <div class="seat-sample reserved"></div>
+                <img src="../storage/img/Ellipse 27 (1).png">
+                <span>Reserved</span>
+            </div>
+            <div class="legend-item">
+                <div class="seat-sample selected"></div>
+                <img src="../storage/img/Ellipse 27.png">
+                <span>Selected</span>
+            </div>
+        </div>
+
+        <div class="date-selection">
+            <button 
+                v-for="date in dates" 
+                :key="date.day"
+                :class="['date-button', { active: date.day === selectedDate }]"
+                @click="selectDate(date.day)"
+            >
+                <span class="day">{{ date.dayName }}</span>
+                <span class="date">{{ date.day }}</span>
+            </button>
+        </div>
+
+        <div class="time-selection">
+            <button 
+                v-for="time in times" 
+                :key="time.time"
+                :class="['time-button', { active: time.time === selectedTime }]"
+                @click="selectTime(time.time)"
+            >
+                <span class="time">{{ time.time }}</span>
+                <span class="price">${{ time.price }}</span>
+            </button>
+        </div>
+
+        <div class="booking-summary">
+            <div class="total-price">
+                <span>Price</span> <br>
+                <span>${{ totalPrice.toFixed(2) }}</span>
+            </div>
+            <button class="buy-ticket" @click="buyTicket">Buy ticket</button>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref, computed } = Vue
+
+        createApp({
+            setup() {
+                const seatLayout = ref([
+                    { id: 'A', seats: Array(5).fill().map((_, i) => ({ number: i + 1, status: 'available' })) },
+                    { id: 'B', seats: Array(7).fill().map((_, i) => ({ number: i + 1, status: 'available' })) },
+                    { id: 'C', seats: Array(9).fill().map((_, i) => ({ number: i + 1, status: i === 4 ? 'selected' : 'available' })) },
+                    { id: 'D', seats: Array(9).fill().map((_, i) => ({ number: i + 1, status: 'reserved' })) },
+                    { id: 'E', seats: Array(9).fill().map((_, i) => ({ number: i + 1, status: 'reserved' })) },
+                    { id: 'F', seats: Array(9).fill().map((_, i) => ({ number: i + 1, status: 'reserved' })) },
+                ])
+
+                const dates = ref([
+                    { day: '17', dayName: 'Fri' },
+                    { day: '18', dayName: 'Sat' },
+                    { day: '19', dayName: 'Sun' },
+                    { day: '20', dayName: 'Mon' },
+                    { day: '21', dayName: 'Tue' },
+                    { day: '22', dayName: 'Wed' },
+                    { day: '23', dayName: 'Thurs' },
+                ])
+
+                const times = ref([
+                    { time: '13:00', price: '5.25' },
+                    { time: '15:45', price: '5.99' },
+                    { time: '18:50', price: '4.50' },
+                    { time: '20:30', price: '6.50' },
+                ])
+
+                const selectedDate = ref('17')
+                const selectedTime = ref('13:00')
+
+                const totalPrice = computed(() => {
+                    const selectedSeats = seatLayout.value.flatMap(row => 
+                        row.seats.filter(seat => seat.status === 'selected')
+                    )
+                    const seatPrice = times.value.find(t => t.time === selectedTime.value)?.price || 0
+                    return selectedSeats.length * parseFloat(seatPrice)
+                })
+
+                function selectSeat(rowId, seatNumber) {
+                    const row = seatLayout.value.find(r => r.id === rowId)
+                    if (row) {
+                        const seat = row.seats.find(s => s.number === seatNumber)
+                        if (seat && seat.status === 'available') {
+                            seat.status = 'selected'
+                        } else if (seat && seat.status === 'selected') {
+                            seat.status = 'available'
+                        }
+                    }
+                }
+
+                function selectDate(day) {
+                    selectedDate.value = day
+                }
+
+                function selectTime(time) {
+                    selectedTime.value = time
+                }
+
+                function buyTicket() {
+                    console.log('Buying ticket')
+                    // Implement ticket purchase logic here
+                }
+
+                const goBack = () => {
+                    window.history.back();
+                };
+
+                return {
+                    seatLayout,
+                    dates,
+                    times,
+                    selectedDate,
+                    selectedTime,
+                    totalPrice,
+                    selectSeat,
+                    selectDate,
+                    selectTime,
+                    goBack,
+                    buyTicket
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>

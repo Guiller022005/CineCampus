@@ -5,8 +5,8 @@ const asientosController = require('../controllers/asientosController');
 // Ruta para obtener todos los asientos
 router.get('/asiento', asientosController.getAllAsientos);
 
-// Ruta para obtener asientos disponibles para funciones
-router.get('/asientos-disponibles-por-funcion/:id_funcion', asientosController.obtenerAsientosDisponiblesPorFunciones);
+// Ruta para obtener funciones por ID de película
+router.get('/asientosByfuncion/:idPelicula', asientosController.obtenerFuncionesPorIdPelicula);
 
 
 module.exports = router;
